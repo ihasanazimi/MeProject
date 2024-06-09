@@ -1,4 +1,4 @@
-package ir.ha.meproject.utility.file
+package ir.ha.meproject.utility.util
 
 import android.R
 import android.content.Context

@@ -27,12 +27,12 @@ fun bitmapToPicture(bitmap: Bitmap): Picture {
 }
 
 
-fun drawableToPicture(drawable: Drawable, width: Int, height: Int): Picture {
+fun drawableToPicture(drawable: Drawable?, width: Int, height: Int): Picture {
     // Step 1: Convert Drawable to Bitmap
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
-    drawable.setBounds(0, 0, canvas.width, canvas.height)
-    drawable.draw(canvas)
+    drawable?.setBounds(0, 0, canvas.width, canvas.height)
+    drawable?.draw(canvas)
 
     // Step 2: Convert Bitmap to Picture
     val picture = Picture()
