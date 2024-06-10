@@ -60,11 +60,11 @@ abstract class BaseFragment<VB : ViewBinding>(
     fun showErrorMessage(message: String) {
         Log.e(TAG, "showErrorMessage - $message")
         SnackBarUtils.showSnackBar(
-            WeakReference(requireActivity()), message, R.drawable.baseline_error_outline_24
+            WeakReference(requireActivity()), message, R.drawable.ic_info
         )
     }
 
-    fun showMessage(message: String, icon: Int = R.drawable.baseline_done_24) {
+    fun showMessage(message: String, icon: Int = R.drawable.ic_done) {
         Log.e("TAG", "showMessage: ")
         SnackBarUtils.showSnackBar(
             WeakReference(requireActivity()), message, icon

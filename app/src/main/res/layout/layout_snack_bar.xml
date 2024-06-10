@@ -32,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/baseline_done_24" />
+            tools:src="@drawable/ic_done" />
 
         <TextView
             android:id="@+id/tvMessage"
