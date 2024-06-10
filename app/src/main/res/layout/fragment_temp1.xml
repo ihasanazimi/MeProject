@@ -5,8 +5,32 @@
 
     <ir.ha.meproject.utility.ui.customViews.temp.CircleProgressView
         android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="bottom|center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:text="+"
+            android:layout_height="wrap_content"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/low"
+            android:layout_width="wrap_content"
+            android:text="-"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 </FrameLayout>
