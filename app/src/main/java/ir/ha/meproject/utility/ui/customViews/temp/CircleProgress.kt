@@ -12,7 +12,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import ir.ha.meproject.utility.util.FontUtil
 
-class CircleProgressView @JvmOverloads constructor(
+class CircleProgress @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
