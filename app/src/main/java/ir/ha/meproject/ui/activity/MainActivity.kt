@@ -1,29 +1,81 @@
 package ir.ha.meproject.ui.activity
 
-import androidx.activity.enableEdgeToEdge
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import ir.ha.meproject.R
-import ir.ha.meproject.databinding.ActivityMainBinding
-import ir.ha.meproject.ui.fragments.temp1.Temp1Fragment
-import ir.ha.meproject.utility.base.BaseActivity
-import ir.ha.meproject.utility.extensions.addFragmentByAnimation
+import android.os.Bundle
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import ir.ha.meproject.ui.compose.graph.ACCOUNT
+import ir.ha.meproject.ui.compose.graph.HOME
+import ir.ha.meproject.ui.compose.theme.ComposeTheme
+import ir.ha.meproject.ui.compose.ui.bank.BankUi
+import ir.ha.meproject.ui.compose.ui.bank.BottomNavigation
+import ir.ha.meproject.ui.compose.ui.profile.Profile
 
-class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+class MainActivity : ComponentActivity() {
 
-    override fun initializing() {
-        super.initializing()
 
-        enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    private val TAG = MainActivity::class.java.simpleName
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            Surface {
+                ComposeTheme {
+
+                    val navController = rememberNavController()
+                    val lastItemOfBottomBar = remember { mutableStateOf(HOME) }
+                    val currentRoute =navController.currentBackStackEntryAsState().value?.destination?.route
+
+                    Scaffold(bottomBar = {
+                        BottomNavigation(currentRoute) { route ->
+                            Log.i(TAG, "onCreate : route -> $route")
+                            runCatching {
+                                if (route != lastItemOfBottomBar.value) {
+                                    navController.navigate(route!!)
+                                }
+                                lastItemOfBottomBar.value = route
+                            }
+                        }
+                    }) { paddingValues ->
+                        Column(modifier = Modifier.padding(paddingValues)) {
+                            SetStatusColor(color = MaterialTheme.colorScheme.background)
+                            NavHost(navController = navController, startDestination = HOME) {
+                                composable(route = HOME) { BankUi() }
+                                composable(route = ACCOUNT) { Profile() }
+                            }
+                        }
+                    }
+                }
+            }
         }
+    }
 
 
-        addFragmentByAnimation(Temp1Fragment(), Temp1Fragment::class.java.simpleName,true,true,R.id.main)
-
+    @Composable
+    fun SetStatusColor(color: Color) {
+        val systemUiController = rememberSystemUiController()
+        SideEffect {
+            systemUiController.setSystemBarsColor(color = color)
+        }
     }
 
 }

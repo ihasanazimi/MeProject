@@ -16,10 +16,33 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0-Beta5")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.51")
-        classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
+        classpath(libs.kotlin.gradle.plugin)
+        classpath(libs.hilt.android.gradle.plugin)
+        classpath (libs.androidx.navigation.safe.args.gradle.plugin)
 //        classpath("com.google.gms:google-services:4.4.0")
     }
 
 }
+
+
+
+subprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            if (project.findProperty("composeCompilerReports") == "true") {
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${project.buildDir.absolutePath}/compose_compiler"
+                )
+            }
+            if (project.findProperty("composeCompilerMetrics") == "true") {
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${project.buildDir.absolutePath}/compose_compiler"
+                )
+            }
+        }
+    }
+}
+
+// run this task in terminal  -> ./gradlew assembleRelease -P composeCompilerReports=true

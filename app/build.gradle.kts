@@ -19,6 +19,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -56,10 +60,19 @@ android {
         correctErrorTypes = true
     }
 
-//    /** for pdf generator */
-//    packagingOptions {
-//        exclude("META-INF/DEPENDENCIES")
-//    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    buildFeatures { viewBinding = true }
 
 }
 
@@ -68,18 +81,38 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+//    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+//    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
 
-    // test libs
-    //testImplementation("junit:junit:4.13.2")
-    //androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    //androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+//    implementation("com.google.android.material:material:1.5.0-beta01")
+    implementation("androidx.compose.ui:ui-text-android:1.6.2")
+    implementation("androidx.compose.ui:ui-android:1.6.5")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.6")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
+
 
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -90,7 +123,7 @@ dependencies {
     implementation("androidx.databinding:databinding-runtime:8.3.1")
 
     // Google MaterialDesign
-    implementation("com.google.android.material:material:1.11.0")
+    /*implementation("com.google.android.material:material:1.11.0")*/
 
     // Kotlin Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
