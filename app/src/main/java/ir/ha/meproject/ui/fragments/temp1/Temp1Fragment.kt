@@ -222,6 +222,4 @@ class Temp1Fragment : BaseFragment<FragmentTemp1Binding>(FragmentTemp1Binding::i
         binding.textDropTarget.setCompoundDrawables(null, null, null, null)
     }
 
-
-
 }
