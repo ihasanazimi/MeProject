@@ -32,8 +32,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         /**
          1 - add intent filter to manifest file
+
+         <intent-filter>
+
+         <action android:name="android.intent.action.VIEW" />
+         <category android:name="android.intent.category.DEFAULT" />
+         <category android:name="android.intent.category.BROWSABLE" />
+
+         <data
+         android:scheme="https"
+         android:host="www.example.com"
+         android:pathPrefix="/path" />
+
+            </intent-filter>
+
+
          2 - filtered schema -> [https] links
-         3 - after adding this intent filter on the manifest - run this command to shell on the project path {  adb shell am start -W -a android.intent.action.VIEW -d "https://www.example.com/hasanazimi"ir.ha.meproject  }
+
+         3 - after adding this intent filter on the manifest
+         run this command to shell on the project path {  adb shell am start -W -a android.intent.action.VIEW -d "https://www.example.com/hasanazimi"ir.ha.meproject  }
+
          **/
 
     }
