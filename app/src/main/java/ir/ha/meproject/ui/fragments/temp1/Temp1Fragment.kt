@@ -7,6 +7,8 @@ class Temp1Fragment : BaseFragment<FragmentTemp1Binding>(FragmentTemp1Binding::i
 
     override fun initializing() {
         super.initializing()
+
+
     }
 
 

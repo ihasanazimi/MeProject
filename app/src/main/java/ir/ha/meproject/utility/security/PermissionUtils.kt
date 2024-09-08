@@ -6,6 +6,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 object PermissionUtils {
+
+
     fun requestPermissions(
         activity: Activity,
         permissions: Array<String>,
