@@ -1,4 +1,4 @@
-package ir.ha.meproject.ui.fragments
+package ir.ha.meproject.ui.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

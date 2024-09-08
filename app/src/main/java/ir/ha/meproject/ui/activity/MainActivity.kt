@@ -2,16 +2,13 @@ package ir.ha.meproject.ui.activity
 
 import android.Manifest
 import android.content.Intent
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dagger.hilt.android.AndroidEntryPoint
 import ir.ha.meproject.R
 import ir.ha.meproject.databinding.ActivityMainBinding
-import ir.ha.meproject.ui.fragments.DownloadService
 import ir.ha.meproject.utility.base.BaseActivity
-import ir.ha.meproject.utility.extensions.isPiePlus
 import ir.ha.meproject.utility.extensions.isTIRAMISUPlus
 import ir.ha.meproject.utility.extensions.isUPSIDE_DOWN_CAKE_Plus
 import ir.ha.meproject.utility.extensions.singleClick

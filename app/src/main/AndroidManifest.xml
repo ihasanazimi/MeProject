@@ -54,7 +54,7 @@
         </provider>
 
         <service
-            android:name=".ui.fragments.DownloadService"
+            android:name=".ui.activity.DownloadService"
             android:foregroundServiceType="dataSync"
             android:exported="false"
             tools:ignore="ForegroundServicePermission" />
