@@ -2,7 +2,6 @@ package ir.ha.meproject.ui.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -11,7 +10,7 @@ import android.os.Environment
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.FileProvider
+import ir.ha.meproject.utility.util.NotificationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -110,16 +109,13 @@ class DownloadService : Service() {
                 val progress = (total * 100 / fileLength).toInt()
                 withContext(Dispatchers.Main) {
                     // Update progress notification
-                    showNotification(
-                        this@DownloadService,
-                        CHANNEL_ID,
-                        CHANNEL_NAME,
-                        notification_id, // Use the same ID for progress notification
-                        "$fileName Downloading...",
-                        "Progress: $progress%",
-                        android.R.drawable.stat_sys_download,
-                        progress,
-                        autoCancel = false
+                    NotificationUtil(this@DownloadService).updateProgressNotification(
+                        channelId = CHANNEL_ID,
+                        icon = android.R.drawable.stat_sys_download,
+                        title = "$fileName Downloading...",
+                        notificationId = notification_id,
+                        progressMax = 100,
+                        progressCurrent = progress ,
                     )
                 }
             }
@@ -132,38 +128,26 @@ class DownloadService : Service() {
             if (renameSuccessful) {
                 withContext(Dispatchers.Main) {
                     // Update to completion notification using the same ID
-                    showNotification(
-                        this@DownloadService,
-                        CHANNEL_ID,
-                        CHANNEL_NAME,
-                        notification_id, // Same ID to replace the progress notification
-                        "Download completed",
-                        "Tap to open",
-                        android.R.drawable.stat_sys_download_done,
-                        pendingIntent = PendingIntent.getActivity(
-                            this@DownloadService, 0, Intent(Intent.ACTION_VIEW).apply {
-                                setDataAndType(FileProvider.getUriForFile(this@DownloadService, "${packageName}.provider", finalFile), contentResolver.getType(FileProvider.getUriForFile(this@DownloadService, "${packageName}.provider", finalFile)))
-                                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK
-                            },
-                            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-                        ),
-                        autoCancel = false /* Automatically cancel the notification when tapped */,
-                        importantLevel = NotificationManager.IMPORTANCE_HIGH
+                    NotificationUtil(this@DownloadService).showBasicNotification(
+                        channelId = CHANNEL_ID,
+                        title = "Download completed",
+                        message = "Tap to open",
+                        icon = android.R.drawable.stat_sys_download_done,
+                        priority = NotificationManager.IMPORTANCE_LOW,
+                        notificationId = notification_id,
+                        intent = Intent(Intent.ACTION_VIEW)
                     )
                 }
             } else {
                 Log.e("DownloadService", "Failed to rename file")
                 withContext(Dispatchers.Main) {
-                    showNotification(
-                        this@DownloadService,
-                        CHANNEL_ID,
-                        CHANNEL_NAME,
-                        notification_id, // Same ID for error notification
-                        "Download failed",
-                        "An error occurred during download.",
-                        android.R.drawable.stat_notify_error,
-                        importantLevel = NotificationManager.IMPORTANCE_HIGH,
-                        autoCancel = false
+                    NotificationUtil(this@DownloadService).showBasicNotification(
+                        channelId = CHANNEL_ID,
+                        title = "Download failed",
+                        message = "An error occurred during download.",
+                        icon = android.R.drawable.stat_notify_error,
+                        priority = NotificationManager.IMPORTANCE_HIGH,
+                        notificationId = notification_id
                     )
                 }
             }
@@ -177,59 +161,18 @@ class DownloadService : Service() {
 
             isDownloading = false
             withContext(Dispatchers.Main) {
-                showNotification(
-                    this@DownloadService,
-                    CHANNEL_ID,
-                    CHANNEL_NAME,
-                    notification_id, // Same ID for error notification
-                    "Download failed",
-                    "An error occurred during download.",
-                    android.R.drawable.stat_notify_error,
-                    importantLevel = NotificationManager.IMPORTANCE_HIGH,
-                    autoCancel = false
+                NotificationUtil(this@DownloadService).showBasicNotification(
+                    channelId = CHANNEL_ID,
+                    title = "Download failed",
+                    message = "An error occurred during download.",
+                    icon = android.R.drawable.stat_notify_error,
+                    priority = NotificationManager.IMPORTANCE_HIGH,
+                    notificationId = notification_id
                 )
             }
             stopForeground(true)
             stopSelf()
         }
-    }
-
-
-
-    private fun showNotification(
-        context: Context,
-        channelId: String,
-        channelName: String,
-        notificationId: Int,
-        title: String,
-        message: String,
-        smallIcon: Int,
-        progress: Int? = null,
-        pendingIntent: PendingIntent? = null,
-        autoCancel: Boolean = false,
-        importantLevel : Int = NotificationManager.IMPORTANCE_LOW
-    ) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, channelName, importantLevel)
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        val builder = NotificationCompat.Builder(context, channelId)
-            .setContentTitle(title)
-            .setContentText(message)
-            .setSmallIcon(smallIcon)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(autoCancel)
-
-        if (progress != null) {
-            builder.setProgress(100, progress, false)
-        } else {
-            builder.setProgress(0, 0, false)
-        }
-
-        val notification = builder.build()
-        notificationManager.notify(notificationId, notification)
     }
 }
 
