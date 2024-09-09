@@ -10,6 +10,7 @@ import android.os.Environment
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import ir.ha.meproject.utility.extensions.isOreoPlus
 import ir.ha.meproject.utility.util.NotificationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +42,7 @@ class DownloadService : Service() {
         var fileName = intent?.getStringExtra("fileName") ?: "downloaded_file"
 
         // Create the notification channel (Android O and above)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (isOreoPlus()) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW).apply {
                 description = "Download Notification Channel"
             }
