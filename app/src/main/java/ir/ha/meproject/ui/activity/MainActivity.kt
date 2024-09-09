@@ -45,6 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
 
         EventBus.getDefault().register(this)
+        binding.downloadBtn.title("Press to download file" , "please waite to complete download..")
 
     }
 
@@ -83,12 +84,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
             DownloadService.Companion.MessageEnum.STARTED -> {
                 showMessage( "Download is " + DownloadService.Companion.MessageEnum.STARTED.name)
+                binding.downloadBtn.showLoading(true)
             }
             DownloadService.Companion.MessageEnum.COMPLETED -> {
                 showMessage("Download is " + DownloadService.Companion.MessageEnum.COMPLETED.name)
+                binding.downloadBtn.showLoading(false)
             }
             DownloadService.Companion.MessageEnum.FAILED -> {
                 showMessage("Download is " + DownloadService.Companion.MessageEnum.FAILED.name)
+                binding.downloadBtn.showLoading(false)
             }
             else -> Log.e(this@MainActivity::class.java.simpleName, "onMessageEvent: ", )
 
@@ -98,7 +102,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun listeners() {
         super.listeners()
 
-        binding.downloadBtn.singleClick {
+        binding.downloadBtn.clickListener {
             if (PermissionUtils.arePermissionsGranted(this, contentPermissions)) {
                 downloadFile()
             } else {
