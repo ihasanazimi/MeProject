@@ -11,9 +11,14 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import ir.ha.meproject.utility.extensions.showToast
 
-class NotificationUtil(private val context: Context) {
+object NotificationUtil {
+
+    private var notificationUpdateNotifBuilder: NotificationCompat.Builder?= null
+
 
     fun showBasicNotification(
+        context: Context,
+        notificationManager : NotificationManagerCompat ,
         channelId: String,
         title: String,
         message: String,
@@ -46,6 +51,8 @@ class NotificationUtil(private val context: Context) {
     }
 
     fun showNotificationWithAction(
+        context: Context,
+        notificationManager : NotificationManagerCompat ,
         channelId: String,
         title: String,
         message: String,
@@ -77,6 +84,8 @@ class NotificationUtil(private val context: Context) {
     }
 
     fun showProgressNotification(
+        context: Context,
+        notificationManager : NotificationManagerCompat ,
         channelId: String,
         title: String,
         icon: Int,
@@ -100,6 +109,8 @@ class NotificationUtil(private val context: Context) {
     }
 
     fun updateProgressNotification(
+        context: Context,
+        notificationManager : NotificationManagerCompat ,
         channelId: String,
         title: String,
         icon: Int,
@@ -107,23 +118,26 @@ class NotificationUtil(private val context: Context) {
         progressCurrent: Int,
         notificationId: Int
     ) {
-        val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(icon)
-            .setContentTitle(title)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setProgress(progressMax, progressCurrent, false)
 
-        val notificationManager = NotificationManagerCompat.from(context)
+        if (notificationUpdateNotifBuilder == null){
+            notificationUpdateNotifBuilder = NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(icon)
+                .setContentTitle(title)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setProgress(progressMax, progressCurrent, false)
+        }
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             showToast(context,"Permissions not allowed")
             return
         }
 
-        notificationManager.notify(notificationId, builder.build())
+        notificationUpdateNotifBuilder?.build()?.let { notificationManager.notify(notificationId, it) }
     }
 
     fun showHighPriorityNotification(
+        context: Context,
+        notificationManager : NotificationManagerCompat ,
         channelId: String,
         title: String,
         message: String,
@@ -148,6 +162,8 @@ class NotificationUtil(private val context: Context) {
     }
 
     fun showBigPictureNotification(
+        context: Context,
+        notificationManager : NotificationManagerCompat ,
         channelId: String,
         title: String,
         message: String,
@@ -162,8 +178,6 @@ class NotificationUtil(private val context: Context) {
             .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bigPicture))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(false)
-
-        val notificationManager = NotificationManagerCompat.from(context)
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             showToast(context,"Permissions not allowed")

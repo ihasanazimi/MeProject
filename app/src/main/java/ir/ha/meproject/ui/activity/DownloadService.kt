@@ -3,19 +3,19 @@ package ir.ha.meproject.ui.activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Environment
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import ir.ha.meproject.utility.extensions.isOreoPlus
 import ir.ha.meproject.utility.util.NotificationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -27,7 +27,9 @@ class DownloadService : Service() {
     private val CHANNEL_NAME = "Download Notifications"
     private var notification_id = 1
     private var isDownloading = false
-    private val  notificationManager by lazy { getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
+
+    private val notificationManager by lazy { NotificationManagerCompat.from(this) }
+
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -70,7 +72,6 @@ class DownloadService : Service() {
         return START_NOT_STICKY
     }
 
-
     private fun getUniqueFileName(fileName: String): String {
         val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         var uniqueFileName = fileName
@@ -91,45 +92,87 @@ class DownloadService : Service() {
 
         try {
             val url = URL(fileUrl)
-            val connection = url.openConnection()
-            connection.connect()
+            val connection = withContext(Dispatchers.IO) {
+                url.openConnection()
+            }
+            withContext(Dispatchers.IO) {
+                connection.connect()
+            }
 
             val fileLength = connection.contentLength
 
-            val input = BufferedInputStream(url.openStream())
-            val output = FileOutputStream(tempFile)
-
-            val data = ByteArray(1024)
-            var total: Long = 0
-            var count: Int
-
-            while (input.read(data).also { count = it } != -1) {
-                total += count
-                output.write(data, 0, count)
-
-                val progress = (total * 100 / fileLength).toInt()
-                withContext(Dispatchers.Main) {
-                    // Update progress notification
-                    NotificationUtil(this@DownloadService).updateProgressNotification(
-                        channelId = CHANNEL_ID,
-                        icon = android.R.drawable.stat_sys_download,
-                        title = "$fileName Downloading...",
-                        notificationId = notification_id,
-                        progressMax = 100,
-                        progressCurrent = progress ,
-                    )
-                }
+            if (fileLength <= 0) {
+                Log.e("DownloadService", "Invalid file length: $fileLength")
+                throw Exception("File length is invalid")
             }
 
-            output.flush()
-            output.close()
-            input.close()
+            val input = BufferedInputStream(withContext(Dispatchers.IO) {
+                url.openStream()
+            })
+            val output = withContext(Dispatchers.IO) {
+                FileOutputStream(tempFile)
+            }
 
+            // افزایش اندازه بافر به 8192
+            val data = ByteArray(8192)
+            var total: Long = 0
+            var count: Int
+            var lastProgress = 0 // برای ذخیره آخرین مقدار پیشرفت
+
+            try {
+                EventBus.getDefault().post(MessageEvent(MessageEnum.STARTED))
+                while (withContext(Dispatchers.IO) {
+                        input.read(data)
+                    }.also { count = it } != -1) {
+                    total += count
+                    withContext(Dispatchers.IO) {
+                        output.write(data, 0, count)
+                    }
+
+                    // محاسبه‌ی پیشرفت دانلود
+                    val progress = ((total * 100) / fileLength).toInt()
+
+                    // فقط زمانی که پیشرفت تغییر می‌کند، نوتیفیکیشن را به‌روزرسانی کن
+                    if (progress != lastProgress) {
+
+                        lastProgress = progress
+                        Log.d("DownloadService", "Download progress: $progress%")
+
+                        withContext(Dispatchers.Main) {
+                            // Update progress notification
+                            NotificationUtil.updateProgressNotification(
+                                context = this@DownloadService,
+                                notificationManager = notificationManager,
+                                channelId = CHANNEL_ID,
+                                icon = android.R.drawable.stat_sys_download,
+                                title = "$fileName Downloading...",
+                                notificationId = notification_id,
+                                progressMax = 100,
+                                progressCurrent = progress
+                            )
+                        }
+
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("DownloadService", "Error during download loop: ${e.message}")
+                throw e
+            }
+
+            withContext(Dispatchers.IO) {
+                output.flush()
+                output.close()
+                input.close()
+            }
+
+            // تغییر نام فایل موقت به فایل نهایی
             val renameSuccessful = tempFile.renameTo(finalFile)
             if (renameSuccessful) {
                 withContext(Dispatchers.Main) {
-                    // Update to completion notification using the same ID
-                    NotificationUtil(this@DownloadService).showBasicNotification(
+                    // نوتیفیکیشن اتمام دانلود
+                    NotificationUtil.showBasicNotification(
+                        context = this@DownloadService,
+                        notificationManager = notificationManager,
                         channelId = CHANNEL_ID,
                         title = "Download completed",
                         message = "Tap to open",
@@ -138,11 +181,15 @@ class DownloadService : Service() {
                         notificationId = notification_id,
                         intent = Intent(Intent.ACTION_VIEW)
                     )
+
+                    EventBus.getDefault().post(MessageEvent(MessageEnum.COMPLETED))
                 }
             } else {
                 Log.e("DownloadService", "Failed to rename file")
                 withContext(Dispatchers.Main) {
-                    NotificationUtil(this@DownloadService).showBasicNotification(
+                    NotificationUtil.showBasicNotification(
+                        context = this@DownloadService,
+                        notificationManager = notificationManager,
                         channelId = CHANNEL_ID,
                         title = "Download failed",
                         message = "An error occurred during download.",
@@ -151,10 +198,13 @@ class DownloadService : Service() {
                         notificationId = notification_id
                     )
                 }
+                EventBus.getDefault().post(MessageEvent(MessageEnum.FAILED))
             }
 
             isDownloading = false
-            stopForeground(true)
+
+            // تاخیر در توقف foreground
+            stopForeground(false)
             stopSelf()
 
         } catch (e: Exception) {
@@ -162,7 +212,9 @@ class DownloadService : Service() {
 
             isDownloading = false
             withContext(Dispatchers.Main) {
-                NotificationUtil(this@DownloadService).showBasicNotification(
+                NotificationUtil.showBasicNotification(
+                    context = this@DownloadService,
+                    notificationManager = notificationManager,
                     channelId = CHANNEL_ID,
                     title = "Download failed",
                     message = "An error occurred during download.",
@@ -171,9 +223,17 @@ class DownloadService : Service() {
                     notificationId = notification_id
                 )
             }
-            stopForeground(true)
+            EventBus.getDefault().post(MessageEvent(MessageEnum.FAILED))
+            stopForeground(false)
             stopSelf()
         }
     }
-}
 
+
+    companion object{
+        data class MessageEvent(var message : MessageEnum)
+        enum class MessageEnum{
+            STARTED , COMPLETED , FAILED ,
+        }
+    }
+}

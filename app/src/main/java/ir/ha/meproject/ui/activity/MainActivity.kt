@@ -2,6 +2,7 @@ package ir.ha.meproject.ui.activity
 
 import android.Manifest
 import android.content.Intent
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +14,9 @@ import ir.ha.meproject.utility.extensions.isTIRAMISUPlus
 import ir.ha.meproject.utility.extensions.isUPSIDE_DOWN_CAKE_Plus
 import ir.ha.meproject.utility.extensions.singleClick
 import ir.ha.meproject.utility.security.PermissionUtils
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 @AndroidEntryPoint
@@ -40,6 +44,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             insets
         }
 
+        EventBus.getDefault().register(this)
+
     }
 
     private fun checkPermission() {
@@ -60,24 +66,42 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun downloadFile() {
         val intent = Intent(this, DownloadService::class.java).apply {
-            val link = "https://dl.motionlab.ir/Music/%D8%A7%D9%81%DA%A9%D8%AA%20%D8%B5%D9%88%D8%AA%DB%8C/01_notification_mobile_www.motionlab.ir.wav"
+            val link = "https://nicmusic.musicmelnet.com/upload/2024/08/20/Relaxing%20Music%20for%20Stress%20Relief%201.mp3"
             val fileName = link.substringBeforeLast('.', "").substringAfterLast('/')
             val format = link.substringAfterLast('.', "")
             putExtra("fileUrl", link)
             putExtra("fileName", "$fileName.${format}")
         }
         startService(intent)
-        showMessage("Downloading...")
+
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event : DownloadService.Companion.MessageEvent){
+        Log.e(this@MainActivity::class.java.simpleName, "onMessageEvent: ${event.message.name} ", )
+        when(event.message){
+
+            DownloadService.Companion.MessageEnum.STARTED -> {
+                showMessage( "Download is " + DownloadService.Companion.MessageEnum.STARTED.name)
+            }
+            DownloadService.Companion.MessageEnum.COMPLETED -> {
+                showMessage("Download is " + DownloadService.Companion.MessageEnum.COMPLETED.name)
+            }
+            DownloadService.Companion.MessageEnum.FAILED -> {
+                showMessage("Download is " + DownloadService.Companion.MessageEnum.FAILED.name)
+            }
+            else -> Log.e(this@MainActivity::class.java.simpleName, "onMessageEvent: ", )
+
+        }
+    }
 
     override fun listeners() {
         super.listeners()
 
         binding.downloadBtn.singleClick {
-            if (PermissionUtils.arePermissionsGranted(this, contentPermissions)){
+            if (PermissionUtils.arePermissionsGranted(this, contentPermissions)) {
                 downloadFile()
-            }else{
+            } else {
                 checkPermission()
             }
         }
@@ -85,6 +109,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
 
 
 }

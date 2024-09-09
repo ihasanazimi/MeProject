@@ -216,6 +216,8 @@ dependencies {
     implementation(libs.stetho.okhttp3)
     implementation(libs.stetho.js.rhino)
 
+    implementation("org.greenrobot:eventbus:3.3.1")
+
 
 
 
