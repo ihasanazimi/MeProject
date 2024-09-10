@@ -33,12 +33,28 @@
 
 
     <declare-styleable name="LoadingButton">
-
-        <attr name="title" format="string"/>
-        <attr name="color" format="color"/>
-        <attr name="icon" format="integer"/>
-        <attr name="iconTint" format="color"/>
-
+        <attr name="loadingBtnTitle" format="string" />
+        <attr name="loadingBtnLoadingTitle" format="string" />
+        <attr name="loadingBtnBackgroundColor" format="reference|color"/>
+        <attr name="loadingBtnTextColor" format="reference|color"/>
+        <attr name="loadingBtnIcon" format="reference"/>
+        <attr name="loadingBtnIconTint" format="reference|color"/>
+        <attr name="loadingBtnIconSize" format="dimension"/>
+        <attr name="loadingBtnIconPadding" format="dimension"/>
+        <attr name="loadingBtnGravity" format="enum">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="loadingBtnTextGravity" format="enum">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="loadingBtnIconGravity" format="enum">
+            <enum name="start" value="3"/>
+            <enum name="end" value="5"/>
+        </attr>
     </declare-styleable>
 
 

@@ -69,6 +69,7 @@ fun View.startCircularReveal(
             }
 
             circularReveal.addListener(object : AnimatorListenerAdapter() {
+
                 override fun onAnimationStart(animation: Animator) {
                     super.onAnimationStart(animation)
                     Log.i(TAG_ANIMATION, "onAnimationStart: ")
@@ -89,7 +90,6 @@ fun View.startCircularReveal(
                     onCancellation?.invoke()
                     this@startCircularReveal.disableHardwareLayer()
                 }
-
 
             })
 
