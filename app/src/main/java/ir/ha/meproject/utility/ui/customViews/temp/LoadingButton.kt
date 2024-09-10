@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
 import ir.ha.meproject.R
 import ir.ha.meproject.databinding.LayoutLoadingButtonBinding
-import ir.ha.meproject.utility.ui.customViews.LoadingButton
 
 class LoadingButton(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
 
