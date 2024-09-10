@@ -1,10 +1,10 @@
-package ir.ha.meproject.ui.fragments.temp1
+package ir.ha.meproject.presentation.features.fragments.temp1
 
 import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
+import ir.ha.meproject.common.base.BaseFragment
 import ir.ha.meproject.databinding.FragmentTemp1Binding
-import ir.ha.meproject.utility.base.BaseFragment
 
 class WorkerFragment : BaseFragment<FragmentTemp1Binding>(FragmentTemp1Binding::inflate) {
 
@@ -16,8 +16,6 @@ class WorkerFragment : BaseFragment<FragmentTemp1Binding>(FragmentTemp1Binding::
         binding.btn.setOnClickListener {
             setOnwTimeWorkRequest()
         }
-
-
 
 
     }

@@ -1,13 +1,13 @@
-package ir.ha.meproject.ui.activity
+package ir.ha.meproject.presentation
 
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import ir.ha.meproject.R
+import ir.ha.meproject.common.base.BaseActivity
+import ir.ha.meproject.common.extensions.addFragmentByAnimation
 import ir.ha.meproject.databinding.ActivityMainBinding
-import ir.ha.meproject.ui.fragments.temp1.WorkerFragment
-import ir.ha.meproject.utility.base.BaseActivity
-import ir.ha.meproject.utility.extensions.addFragmentByAnimation
+import ir.ha.meproject.presentation.features.fragments.temp1.WorkerFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
@@ -21,7 +21,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             insets
         }
 
-        addFragmentByAnimation(WorkerFragment(),WorkerFragment::class.java.simpleName,false,false,R.id.main,false)
+        addFragmentByAnimation(
+            WorkerFragment(),
+            WorkerFragment::class.java.simpleName,false,false,R.id.main,false)
     }
 
 }
