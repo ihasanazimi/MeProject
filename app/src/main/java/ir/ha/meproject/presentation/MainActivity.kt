@@ -7,7 +7,7 @@ import ir.ha.meproject.R
 import ir.ha.meproject.common.base.BaseActivity
 import ir.ha.meproject.common.extensions.addFragmentByAnimation
 import ir.ha.meproject.databinding.ActivityMainBinding
-import ir.ha.meproject.presentation.features.fragments.temp1.WorkerFragment
+import ir.ha.meproject.presentation.features.fragments.work_manager.WorkerFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
