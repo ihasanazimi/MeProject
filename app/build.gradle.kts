@@ -216,6 +216,9 @@ dependencies {
     implementation(libs.stetho.okhttp3)
     implementation(libs.stetho.js.rhino)
 
+    // work manager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
 
 
 
