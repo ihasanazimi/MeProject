@@ -2,9 +2,7 @@ package ir.ha.meproject.utility.ui.customViews.temp
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -12,6 +10,7 @@ import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
 import ir.ha.meproject.R
 import ir.ha.meproject.databinding.LayoutLoadingButtonBinding
+import ir.ha.meproject.utility.ui.customViews.LoadingButton
 
 class LoadingButton(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
 
