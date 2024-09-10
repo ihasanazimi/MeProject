@@ -5,6 +5,7 @@
     <color name="transparent">#00ffffff</color>
     <color name="backgroundColor">#fff</color>
     <color name="snackBar_BackgroundColor">#202020</color>
+    <color name="gray">#686868</color>
     <color name="red">#FF0000</color>
     <color name="textColorNormality">#1D1D1D</color>
     <color name="textColorReverse">#EBEBEB</color>

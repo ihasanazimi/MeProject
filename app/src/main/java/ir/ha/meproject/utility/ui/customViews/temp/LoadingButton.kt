@@ -2,6 +2,7 @@ package ir.ha.meproject.utility.ui.customViews.temp
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ class LoadingButton(context: Context, attrs: AttributeSet?) : RelativeLayout(con
     private var binding: LayoutLoadingButtonBinding
     private var buttonTitle: String
     private var loadingTitle: String
+    private var textColor = -1
 
     init {
         // Inflate the layout
@@ -27,62 +29,58 @@ class LoadingButton(context: Context, attrs: AttributeSet?) : RelativeLayout(con
         this.layoutParams = layoutParams
 
         // Load attributes
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.LoadingButton,
-            0, 0
-        ).apply {
+        val attr = context.theme.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0)
             try {
                 // Title and Loading Title
-                buttonTitle = getString(R.styleable.LoadingButton_loadingBtnTitle) ?: "Confirm/OK"
-                loadingTitle = getString(R.styleable.LoadingButton_loadingBtnTitle) ?: "Please Wait ..."
+                buttonTitle = attr.getString(R.styleable.LoadingButton_loadingBtnTitle) ?: "تایید"
+                loadingTitle = attr.getString(R.styleable.LoadingButton_loadingBtnLoadingTitle) ?: "کمی صبر کنید.."
 
                 // Background Tint
-                val backgroundColor = getResourceId(R.styleable.LoadingButton_loadingBtnTBackgroundColor, -1)
+                val backgroundColor = attr.getResourceId(R.styleable.LoadingButton_loadingBtnBackgroundColor, -1)
                 if (backgroundColor != -1) {
                     backgroundTint(backgroundColor)
                 }
 
                 // Text Color
-                val textColor = getResourceId(R.styleable.LoadingButton_loadingBtnTextColor, -1)
+                textColor = attr.getColor(R.styleable.LoadingButton_loadingBtnTextColor, ContextCompat.getColor(context,R.color.white))
                 if (textColor != -1) {
                     textColor(textColor)
                 }
 
                 // Icon
-                val iconResId = getResourceId(R.styleable.LoadingButton_loadingBtnIcon, -1)
+                val iconResId = attr.getResourceId(R.styleable.LoadingButton_loadingBtnIcon, -1)
                 if (iconResId != -1) {
                     binding.btn.setIconResource(iconResId)
                 }
 
                 // Icon Tint
-                val iconTint = getResourceId(R.styleable.LoadingButton_loadingBtnIconTint, -1)
+                val iconTint = attr.getResourceId(R.styleable.LoadingButton_loadingBtnIconTint, -1)
                 if (iconTint != -1) {
                     binding.btn.iconTint = ContextCompat.getColorStateList(context, iconTint)
                 }
 
                 // Icon Size
-                val iconSize = getDimension(R.styleable.LoadingButton_loadingBtnIconSize, -1f)
+                val iconSize = attr.getDimension(R.styleable.LoadingButton_loadingBtnIconSize, -1f)
                 if (iconSize != -1f) {
                     binding.btn.iconSize = iconSize.toInt()
                 }
 
                 // Icon Padding
-                val iconPadding = getDimension(R.styleable.LoadingButton_loadingBtnIconPadding, -1f)
+                val iconPadding = attr.getDimension(R.styleable.LoadingButton_loadingBtnIconPadding, -1f)
                 if (iconPadding != -1f) {
                     binding.btn.iconPadding = iconPadding.toInt()
                 }
 
                 // Button Gravity
-                val buttonGravity = getInt(R.styleable.LoadingButton_loadingBtnGravity, 17)
+                val buttonGravity = attr.getInt(R.styleable.LoadingButton_loadingBtnGravity, 17)
                 binding.btn.gravity = buttonGravity
 
                 // Text Gravity
-                val textGravity = getInt(R.styleable.LoadingButton_loadingBtnTextGravity, 17)
+                val textGravity = attr.getInt(R.styleable.LoadingButton_loadingBtnTextGravity, 17)
                 binding.btn.textAlignment = textGravity
 
                 // Icon Gravity
-                val iconGravity = getInt(R.styleable.LoadingButton_loadingBtnGravity, 3)
+                val iconGravity = attr.getInt(R.styleable.LoadingButton_loadingBtnGravity, 3)
                 if (iconGravity == 3) {
                     binding.btn.iconGravity = MaterialButton.ICON_GRAVITY_START
                 } else {
@@ -90,14 +88,11 @@ class LoadingButton(context: Context, attrs: AttributeSet?) : RelativeLayout(con
                 }
 
                 // Set initial text
-                binding.btn.text = buttonTitle
+                title(buttonTitle,loadingTitle)
 
             } finally {
-                recycle()
+                attr.recycle()
             }
-
-
-        }
     }
 
     // Methods to update attributes programmatically
@@ -108,24 +103,30 @@ class LoadingButton(context: Context, attrs: AttributeSet?) : RelativeLayout(con
     }
 
     fun backgroundTint(color: Int) {
-        binding.btn.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, color))
+        binding.btn.setBackgroundColor(ContextCompat.getColor(context, color))
     }
 
     fun textColor(color: Int) {
-        binding.btn.setTextColor(ContextCompat.getColor(context, color))
+        binding.btn.setTextColor(ColorStateList.valueOf(color))
     }
 
     fun showLoading(show: Boolean) {
         if (show) {
             binding.btn.text = loadingTitle
             binding.btn.isEnabled = false
+            textColor(ContextCompat.getColor(context,R.color.gray))
         } else {
             binding.btn.text = buttonTitle
             binding.btn.isEnabled = true
+            textColor(textColor)
         }
     }
 
     fun clickListener(callback: (() -> Unit)? = null) {
         binding.btn.setOnClickListener { callback?.invoke() }
     }
+
+
+
+
 }

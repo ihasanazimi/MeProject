@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 
 class Temp1Fragment : BaseFragment<FragmentTemp1Binding>(FragmentTemp1Binding::inflate) {
 
-    override fun initializing() {
-        super.initializing()
+    override fun listeners() {
+        super.listeners()
 
 
         binding.progress.setProgress(64,true)
@@ -31,16 +31,8 @@ class Temp1Fragment : BaseFragment<FragmentTemp1Binding>(FragmentTemp1Binding::i
             }
         }
 
-    }
 
 
-    override fun uiConfig() {
-        super.uiConfig()
-    }
-
-
-    override fun listeners() {
-        super.listeners()
     }
 
 }

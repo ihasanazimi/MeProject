@@ -35,7 +35,7 @@
     <declare-styleable name="LoadingButton">
         <attr name="loadingBtnTitle" format="string" />
         <attr name="loadingBtnLoadingTitle" format="string" />
-        <attr name="loadingBtnTBackgroundColor" format="reference|color"/>
+        <attr name="loadingBtnBackgroundColor" format="reference|color"/>
         <attr name="loadingBtnTextColor" format="reference|color"/>
         <attr name="loadingBtnIcon" format="reference"/>
         <attr name="loadingBtnIconTint" format="reference|color"/>
