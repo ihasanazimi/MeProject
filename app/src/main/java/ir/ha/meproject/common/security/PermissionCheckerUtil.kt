@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import ir.ha.meproject.utility.extensions.isMarshmallowPlus
+import ir.ha.meproject.common.extensions.isMarshmallowPlus
 
 const val PERMISSION_REQUEST_CODE = 10010
 

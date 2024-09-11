@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun <T> BaseScreen(
-    viewModel: BaseViewModel<T>,
+    viewModel: BaseComposedViewModel<T>,
     content: @Composable (data: T) -> Unit
 ) {
     val isLoading by viewModel.loading.collectAsState()

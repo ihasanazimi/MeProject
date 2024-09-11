@@ -25,10 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.ha.meproject.ui.compose.theme.BlueStart
-import ir.ha.meproject.ui.compose.theme.GreenStart
-import ir.ha.meproject.ui.compose.theme.OrangeStart
-import ir.ha.meproject.ui.compose.theme.PurpleStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.BlueStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.GreenStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.OrangeStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.PurpleStart
 
 data class Finance(
     val icon: ImageVector,

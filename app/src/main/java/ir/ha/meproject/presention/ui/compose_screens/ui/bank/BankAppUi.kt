@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.ui.bank.sections.CardsSection
-import com.example.compose.ui.bank.sections.CurrenciesSection
+import ir.ha.meproject.presention.ui.compose_screens.ui.bank.sections.CurrenciesSection
 import com.example.compose.ui.bank.sections.FinanceSection
 import com.example.compose.ui.bank.sections.WalletSection
 

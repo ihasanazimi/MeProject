@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-abstract class BaseViewModel<T> : ViewModel() {
+abstract class BaseComposedViewModel<T> : ViewModel() {
 
     open val TAG = this::class.java.simpleName
     private val _loading = MutableStateFlow(false)
@@ -27,4 +27,10 @@ abstract class BaseViewModel<T> : ViewModel() {
     protected fun setData(newData: T) {
         _data.value = newData
     }
+}
+
+
+abstract class BaseViewModel : ViewModel() {
+
+    open val TAG = this::class.java.simpleName
 }

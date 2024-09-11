@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import ir.ha.meproject.R
-import ir.ha.meproject.utility.locale.PERSIAN_LANGUAGE_CODE
-import ir.ha.meproject.utility.locale.localizedContext
-import ir.ha.meproject.utility.ui.SnackBarUtils
+import ir.ha.meproject.common.util.PERSIAN_LANGUAGE_CODE
+import ir.ha.meproject.common.util.SnackBarUtils
+import ir.ha.meproject.common.util.localizedContext
 import java.lang.ref.WeakReference
 import java.util.Locale
 

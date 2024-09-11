@@ -1,7 +1,7 @@
 package ir.ha.meproject.presention.ui.fragments.temp2
 
+import ir.ha.meproject.common.base.BaseFragment
 import ir.ha.meproject.databinding.FragmentTemp2Binding
-import ir.ha.meproject.utility.base.BaseFragment
 
 class Temp2Fragment : BaseFragment<FragmentTemp2Binding>(FragmentTemp2Binding::inflate) {
 

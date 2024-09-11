@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import ir.ha.meproject.utility.extensions.hideKeyboard
+import ir.ha.meproject.common.extensions.hideKeyboard
 
 abstract class BaseBottomSheet<VB : ViewBinding>(
     private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB

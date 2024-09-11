@@ -24,14 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.ha.meproject.R
-import ir.ha.meproject.ui.compose.theme.BlueEnd
-import ir.ha.meproject.ui.compose.theme.BlueStart
-import ir.ha.meproject.ui.compose.theme.GreenEnd
-import ir.ha.meproject.ui.compose.theme.GreenStart
-import ir.ha.meproject.ui.compose.theme.OrangeEnd
-import ir.ha.meproject.ui.compose.theme.OrangeStart
-import ir.ha.meproject.ui.compose.theme.PurpleEdn
-import ir.ha.meproject.ui.compose.theme.PurpleStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.BlueEnd
+import ir.ha.meproject.presention.ui.compose_screens.theme.BlueStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.GreenEnd
+import ir.ha.meproject.presention.ui.compose_screens.theme.GreenStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.OrangeEnd
+import ir.ha.meproject.presention.ui.compose_screens.theme.OrangeStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.PurpleEdn
+import ir.ha.meproject.presention.ui.compose_screens.theme.PurpleStart
 
 val cardItems = listOf(
     Card(

@@ -1,4 +1,4 @@
-package com.example.compose.ui.bank.sections
+package ir.ha.meproject.presention.ui.compose_screens.ui.bank.sections
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
@@ -42,7 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.ha.meproject.ui.compose.theme.GreenStart
+import ir.ha.meproject.presention.ui.compose_screens.theme.GreenStart
 
 
 data class CurrencyItem(val name: String, val buy: Float, val sell: Float, val icon: ImageVector)
@@ -244,7 +244,6 @@ fun CurrencyItem(index: Int, width: Dp) {
             .padding(bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Row(
             modifier = Modifier.width(width),
             verticalAlignment = Alignment.CenterVertically

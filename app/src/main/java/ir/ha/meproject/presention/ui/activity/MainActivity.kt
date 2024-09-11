@@ -31,7 +31,7 @@ import ir.ha.meproject.presention.ui.compose_screens.ui.profile.Profile
 class MainActivity : ComponentActivity() {
 
 
-    private val TAG = ir.ha.meproject.presention.ui.activity.MainActivity::class.java.simpleName
+    private val TAG = MainActivity::class.java.simpleName
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {

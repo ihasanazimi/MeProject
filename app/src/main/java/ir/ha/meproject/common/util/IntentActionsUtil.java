@@ -1,7 +1,6 @@
 package ir.ha.meproject.common.util;
 
-
-import static ir.ha.meproject.utility.extensions.OsComponentsExtensionsKt.isAppAvailable;
+import static ir.ha.meproject.common.extensions.OsComponentsExtensionsKt.isAppAvailable;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
