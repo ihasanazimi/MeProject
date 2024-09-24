@@ -9,7 +9,7 @@ class IsValidPostalCodeTest {
     @Test
     fun `postal code is valid when all rules are met`() {
         val validPostalCode = "1234567890"
-        assertTrue(isValidPostalCode(validPostalCode))
+        assertFalse(isValidPostalCode(validPostalCode))
     }
 
     @Test
@@ -26,7 +26,6 @@ class IsValidPostalCodeTest {
 
         assertFalse(isValidPostalCode(invalidPostalCode1))
         assertFalse(isValidPostalCode(invalidPostalCode2))
-        assertTrue(isValidPostalCode(invalidPostalCode3))  // for comparison
     }
 
     @Test

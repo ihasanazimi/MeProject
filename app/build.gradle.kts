@@ -74,6 +74,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+
 
     // base
     implementation(libs.androidx.activity)
@@ -82,7 +84,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.androidx.core.animation)
-
+    implementation(libs.androidx.legacy.support.v4)
 
     // Data Binding Runtime
     implementation(libs.androidx.databinding.runtime)
@@ -103,7 +105,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.extensions)
 
     /*  Dagger Hilt  */
-    implementation(libs.androidx.legacy.support.v4)
     androidTestImplementation(libs.androidx.rules)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -217,7 +218,23 @@ dependencies {
     implementation(libs.stetho.js.rhino)
 
 
-    testImplementation("org.mockito:mockito-core:3.11.2")
+    testImplementation("org.mockito:mockito-core:4.5.1")
+    testImplementation("org.mockito:mockito-inline:4.5.1")
+    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
+
+    // mockk
+    val mockk = "1.13.10"
+    testImplementation("io.mockk:mockk:$mockk")
+    androidTestImplementation("io.mockk:mockk-android:$mockk")
+
+
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+
+
 
 
 
