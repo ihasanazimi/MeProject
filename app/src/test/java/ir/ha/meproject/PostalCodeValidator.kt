@@ -22,8 +22,6 @@ class IsValidPostalCodeTest {
     fun `postal code is invalid when first five digits contain 0 or 2`() {
         val invalidPostalCode1 = "0234567890"
         val invalidPostalCode2 = "1234067890"
-        val invalidPostalCode3 = "1234567890"
-
         assertFalse(isValidPostalCode(invalidPostalCode1))
         assertFalse(isValidPostalCode(invalidPostalCode2))
     }
