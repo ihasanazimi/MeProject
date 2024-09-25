@@ -19,17 +19,12 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withTimeout
-import kotlinx.coroutines.withTimeoutOrNull
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.assertTimeout
-import java.time.Duration
-import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 
@@ -92,6 +87,9 @@ class UserUseCaseTest1 {
         val list = userUseCase.getAllUsers().first()
         assertEquals(mockUsers, list)
 
+        /**
+         * Method Calls
+         */
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
         // Advance coroutine until idle to ensure completion
@@ -154,6 +152,9 @@ class UserUseCaseTest2 {
         val list = userUseCase.getAllUsers().first()
         assertEquals(mockUsers, list)
 
+        /**
+         * Method Calls
+         */
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
         // Advance coroutine until idle to ensure completion
@@ -181,6 +182,9 @@ class UserUseCaseTest2 {
         val youngs = list.filter { it.age.toInt() > 18 }
         assertTrue(youngs.isNotEmpty())
 
+        /**
+         * Method Calls
+         */
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
         // Advance coroutine until idle to ensure completion
@@ -209,6 +213,9 @@ class UserUseCaseTest2 {
         val teenage = list.find { it.age.toInt() < 18 }
         assertTrue(teenage == null)
 
+        /**
+         * Method Calls
+         */
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
         // Advance coroutine until idle to ensure completion
@@ -237,6 +244,9 @@ class UserUseCaseTest2 {
         val thereIs = list.find { it.fromCountry.equals("Iran") }
         assertTrue(thereIs != null)
 
+        /**
+         * Method Calls
+         */
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
         // Advance coroutine until idle to ensure completion
@@ -265,6 +275,9 @@ class UserUseCaseTest2 {
             val thereIs = list.find { it.fromCountry.equals("Iran") }
             assertTrue(thereIs != null)
 
+            /**
+             * Method Calls
+             */
             coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
             // Advance coroutine until idle to ensure completion
