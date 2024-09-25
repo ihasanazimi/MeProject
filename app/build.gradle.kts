@@ -234,6 +234,10 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 
 
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0") // or the latest version
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0") // for running tests
+
+
 
 
 

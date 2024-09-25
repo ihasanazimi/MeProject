@@ -10,6 +10,7 @@ import ir.ha.meproject.data.model.User
 import ir.ha.meproject.data.repository.UserRepositoryImpl
 import ir.ha.meproject.domain.UserUseCaseImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -17,13 +18,37 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.assertTimeout
+import java.time.Duration
+import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
+
+
+/**
+ * Correctness
+ * Method Calls
+ * Error Handling
+ * Performance and Timeouts
+ * State Verification
+ * Behavior Data Verification
+ * Input and Output
+ * No-Call Verification
+ * Boundary Conditions
+ * Concurrency Tests
+ * Exceptional Conditions
+ * Return Value
+ * Performance Testing
+ * Side Effects
+ */
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -74,14 +99,14 @@ class UserUseCaseTest1 {
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class UserUseCaseTest2{
+class UserUseCaseTest2 {
 
     private val testDispatcher = TestCoroutineDispatcher()
 
     @get:Rule
     val mockkRule = MockKRule(this)
 
-//    private var userUseCase = spyk(UserUseCaseImpl(UserRepositoryImpl()))
+    //    private var userUseCase = spyk(UserUseCaseImpl(UserRepositoryImpl()))
     private var userUseCase = mockk<UserUseCaseImpl>()
 
     @Before
@@ -123,7 +148,6 @@ class UserUseCaseTest2{
     }
 
 
-
     @Test
     fun `Users should be Young`() = runTest {
 
@@ -150,7 +174,6 @@ class UserUseCaseTest2{
         advanceUntilIdle()
 
     }
-
 
 
     @Test
@@ -199,7 +222,7 @@ class UserUseCaseTest2{
 
         val list = userUseCase.getAllUsers().first()
         val thereIs = list.find { it.fromCountry.equals("Iran") }
-        assertTrue( thereIs != null)
+        assertTrue(thereIs != null)
 
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
@@ -208,6 +231,34 @@ class UserUseCaseTest2{
 
     }
 
+
+    @Test(expected = TimeoutCancellationException::class)
+    fun `time out time testing`() = runTest {
+        val result = withTimeout(7000) {
+            // Mock data
+            val mockUsers = listOf(
+                User("Omid", "Sadr", "30", "USA", "New York"),
+                User("Pejman", "Pajoohi", "25", "Canada", "Toronto"),
+                User("Alireza", "Ganbari", "40", "Iran", "Tehran"),
+                User("Hasan", "Azimi", "35", "Iran", "Tehran"),
+                User("Sobhan", "Hasanvand", "32", "Japan", "Tokyo"),
+                User("Parsia", "Dolati", "45", "France", "Paris"),
+                User("Zahra", "Eslami", "32", "India", "Mumbai")
+            )
+
+            coEvery { userUseCase.getAllUsers() } returns flowOf(mockUsers)
+
+            val list = userUseCase.getAllUsers().first()
+            val thereIs = list.find { it.fromCountry.equals("Iran") }
+            assertTrue(thereIs != null)
+
+            coVerify(exactly = 1) { userUseCase.getAllUsers() }
+
+            // Advance coroutine until idle to ensure completion
+            advanceUntilIdle()
+        }
+        assertNotNull(result)
+    }
 
 }
 
