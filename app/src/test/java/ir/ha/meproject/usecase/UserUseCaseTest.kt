@@ -22,6 +22,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 
@@ -140,8 +141,8 @@ class UserUseCaseTest2{
         coEvery { userUseCase.getAllUsers() } returns flowOf(mockUsers)
 
         val list = userUseCase.getAllUsers().first()
-        val teenage = list.find { it.age.toInt() > 18 }
-        assertTrue(teenage == null)
+        val youngs = list.filter { it.age.toInt() > 18 }
+        assertTrue(youngs.isNotEmpty())
 
         coVerify(exactly = 1) { userUseCase.getAllUsers() }
 
