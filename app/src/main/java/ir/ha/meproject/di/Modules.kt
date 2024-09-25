@@ -36,8 +36,8 @@ object Modules {
 
     @Singleton
     @Provides
-    fun provideUserRepository(context: Context): UserRepository {
-        return UserRepositoryImpl(context)
+    fun provideUserRepository(): UserRepository {
+        return UserRepositoryImpl()
     }
 
 

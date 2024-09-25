@@ -15,14 +15,9 @@ interface UserRepository {
 
 
 
-class UserRepositoryImpl(val context: Context) : UserRepository {
+class UserRepositoryImpl : UserRepository {
 
     override suspend fun getAllUsers(): Flow<List<User>> = flow {
-        /*val json = AssetHelper.readJsonFromAssets(context,"Users.json")
-        kotlin.runCatching {
-            val listOfUsers = Gson().fromJson(json, Array<User>::class.java).toList()
-            emit(listOfUsers)
-        }*/
 
         val list = listOf(
             User("Omid", "Sadr", "30", "USA", "New York"),
