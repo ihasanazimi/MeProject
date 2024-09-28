@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken
 import ir.ha.meproject.common.file.AssetHelper
 import ir.ha.meproject.common.file.AssetHelper.parseJson
 import ir.ha.meproject.data.model.User
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -19,6 +20,9 @@ interface UserRepository {
 class UserRepositoryImpl : UserRepository {
 
     override suspend fun getAllUsers(): Flow<List<User>> = flow {
+
+        delay(5000)
+
         emit(listOf(
             User("Omid", "Sadr", "30", "USA", "New York"),
             User("Pejman", "Pajoohi", "25", "Canada", "Toronto"),

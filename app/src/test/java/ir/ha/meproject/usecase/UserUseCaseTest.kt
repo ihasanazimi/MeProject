@@ -105,6 +105,7 @@ class UserUseCaseTest2 {
     @get:Rule
     val mockkRule = MockKRule(this)
 
+    val TAG = this::class.java.simpleName + " ------------> "
     private val testDispatcher = TestCoroutineDispatcher()
     private var userUseCase = mockk<UserUseCaseImpl>()
     private var mockUsers = arrayListOf<User>()
@@ -187,9 +188,11 @@ class UserUseCaseTest2 {
     /*** Performance and Timeouts Test */
     @Test(expected = TimeoutCancellationException::class)
     fun `time out time testing`() = runTest {
-        withTimeout(100) {
+        withTimeout(4000) {
             coEvery { userUseCase.getAllUsers() } returns flowOf(mockUsers)
-            delay(150)
+            println(TAG + "Before delay -->  ")
+            delay(8000)
+            println(TAG + "After delay -->  ")
             val list = userUseCase.getAllUsers().first()
             val thereIs = list.find { it.fromCountry.equals("Iran") }
             assertTrue(thereIs != null)
