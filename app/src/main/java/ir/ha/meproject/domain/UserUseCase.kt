@@ -29,7 +29,7 @@ class UserUseCaseImpl @Inject constructor(private val userRepository: UserReposi
 
     override suspend fun getCustomItem(index: Int): Flow<User> = flow {
         getAllUsers().first().let { list ->
-            if (index > list.size-1) emit(list[index])
+            if (index < list.size-1) emit(list[index])
         }
     }
 }
