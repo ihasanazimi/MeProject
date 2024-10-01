@@ -5,9 +5,11 @@ plugins {
     id ("kotlin-parcelize")
     id ("androidx.navigation.safeargs.kotlin")
     id ("com.google.devtools.ksp")
+    jacoco
 }
 
 android {
+
     namespace = "ir.ha.meproject"
     compileSdk = 34
 
@@ -20,6 +22,46 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+
+
+
+// Iterate over all application variants (e.g., debug, release)
+    applicationVariants.all {
+        val variantName = name.capitalize()
+
+        // Define task names for unit tests and Android tests
+        val unitTests = "test${variantName}UnitTest"
+        val androidTests = "connected${variantName}AndroidTest"
+
+        // Register a JacocoReport task for code coverage analysis
+        tasks.register<JacocoReport>("Jacoco${variantName}CodeCoverage") {
+            dependsOn(unitTests, androidTests)
+
+            group = "Reporting"
+            description = "Execute UI and unit tests, generate and combine Jacoco coverage report"
+
+            reports {
+                xml.required.set(true)
+                html.required.set(true)
+            }
+
+            sourceDirectories.setFrom(files("$projectDir/src/main/java"))
+            classDirectories.setFrom(
+                files(
+                    fileTree(mapOf("dir" to "$buildDir/intermediates/javac/${variantName}", "exclude" to exclusions)),
+                    fileTree(mapOf("dir" to "$buildDir/tmp/kotlin-classes/${variantName}", "exclude" to exclusions))
+                )
+            )
+
+            executionData.setFrom(
+                fileTree(buildDir) {
+                    include("**/*.exec", "**/*.ec")
+                }
+            )
+        }
+    }
+
 
     buildTypes {
         release {
@@ -40,6 +82,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+
         }
     }
 
@@ -57,6 +103,9 @@ android {
         viewBinding = true
     }
 
+
+
+
 //    kapt {
 //        correctErrorTypes = true
 //    }
@@ -66,6 +115,32 @@ android {
 //        exclude("META-INF/DEPENDENCIES")
 //    }
 
+    packaging  {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+        }
+    }
+
+}
+
+val exclusions = listOf(
+    "**/R.class",
+    "**/R\$*.class",
+    "**/BuildConfig.*",
+    "**/Manifest*.*",
+    "**/*Test*.*"
+)
+
+tasks.withType(Test::class) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
 }
 
 dependencies {

@@ -25,7 +25,7 @@ class BankCardNumberTest {
     }
 
     @Test
-    fun `Card number with six consecutive '*' is valid`(){
+    fun `card_number_with_six_consecutive_start_is valid`(){
         val cn1 = "5894-6315-6004-3432"
         val cn2 = "502229******5470"
         val cn3 = "5022-29**-****-5470"

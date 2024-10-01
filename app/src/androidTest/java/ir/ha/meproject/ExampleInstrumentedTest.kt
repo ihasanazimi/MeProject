@@ -8,12 +8,5 @@ import org.junit.runner.RunWith
 
 class AllTest {
 
-    val postalCodeValidatorTest = PostalCodeValidatorTest()
-
-    @org.junit.Test
-    fun RunAllTests() {
-        postalCodeValidatorTest.postalCode_isValid_whenAllRulesAreMet()
-    }
-
 
 }

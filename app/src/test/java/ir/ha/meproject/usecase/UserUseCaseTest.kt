@@ -14,13 +14,19 @@ import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.yield
 import org.junit.After
+import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,28 +34,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 
-/**
- * Correctness
- * Method Calls
- * Error Handling
- * Performance and Timeouts
- * State Verification
- * Behavior Data Verification
- * Input and Output
- * No-Call Verification
- * Boundary Conditions
- * Concurrency Tests
- * Exceptional Conditions
- * Return Value
- * Performance Testing
- * Side Effects
- */
-
-
 @OptIn(ExperimentalCoroutinesApi::class)
 class UserUseCaseTest1 {
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = StandardTestDispatcher()
     private var userUseCase = spyk(UserUseCaseImpl(UserRepositoryImpl()))
     private var mockUsers = arrayListOf<User>()
 
@@ -74,7 +62,6 @@ class UserUseCaseTest1 {
         // Reset the dispatcher
         mockUsers.clear()
         kotlinx.coroutines.Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
     }
 
     /***  Correctness by spyk */
@@ -84,6 +71,23 @@ class UserUseCaseTest1 {
         assertEquals(mockUsers, list)
         coVerify(exactly = 1) { userUseCase.getAllUsers() } /*** Method Calls*/
         advanceUntilIdle()
+    }
+
+
+    @Test
+    fun testCoroutineExecution() = runTest {
+        var result = 0
+
+        launch {
+            delay(10000)
+            result = 1
+        }
+
+        runCurrent() // This won't change result as the coroutine is delayed
+        assertEquals(0, result)
+
+        advanceUntilIdle() // This will run all pending coroutines
+        assertEquals(1, result)
     }
 
 }
@@ -106,7 +110,7 @@ class UserUseCaseTest2 {
     val mockkRule = MockKRule(this)
 
     val TAG = this::class.java.simpleName + " ------------> "
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = UnconfinedTestDispatcher()
     private var userUseCase = mockk<UserUseCaseImpl>()
     private var mockUsers = arrayListOf<User>()
 
@@ -132,7 +136,6 @@ class UserUseCaseTest2 {
         // Reset the dispatcher
         mockUsers.clear()
         kotlinx.coroutines.Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
     }
 
 
@@ -160,6 +163,34 @@ class UserUseCaseTest2 {
 
     }
 
+
+    @Test
+    fun testDelayedOperation() = runTest {
+        var result = false
+
+        launch {
+            delay(1000) // Delay for 1 second
+            result = true
+        }
+
+        advanceTimeBy(999)
+        assertFalse(result) // The operation hasn't completed yet
+
+        advanceTimeBy(1)
+        yield() // Allow the scheduled coroutine to complete
+        assertTrue(result) // Now it has completed
+    }
+
+
+//    @Test
+//    fun `test coroutine exception`() = runTest {
+//        assertFailsWith<IllegalArgumentException> {
+//            launch {
+//                // Simulate an exception being thrown in the coroutine
+//                throw IllegalArgumentException("Invalid argument")
+//            }.join() // Make sure the coroutine completes
+//        }
+//    }
 
     @Test
     fun `Users should be child`() = runTest {
@@ -198,7 +229,6 @@ class UserUseCaseTest2 {
             assertTrue(thereIs != null)
             /*** Method Calls*/
             coVerify(exactly = 1) { userUseCase.getAllUsers() }
-            advanceUntilIdle()
         }
     }
 
