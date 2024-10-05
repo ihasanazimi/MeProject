@@ -1,4 +1,4 @@
-package ir.ha.meproject
+package ir.ha.meproject.samples
 
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,4 +1,4 @@
-package ir.ha.meproject
+package ir.ha.meproject.samples
 
 import org.junit.Before
 import org.junit.Test
@@ -8,8 +8,8 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import kotlin.test.assertEquals
 
-class CalculatorExample ( val operators:Operators) {
-    fun addTwoNumbers(a: Int, b: Int): Int = operators.addTwoInt(a,b)
+class CalculatorExample ( val operators: Operators) {
+    fun addTwoNumbers(a: Int, b: Int): Int = Operators.addTwoInt(a, b)
 }
 object Operators {
     fun addTwoInt(m: Int, n: Int): Int = m - n
@@ -33,7 +33,7 @@ class CalculatorExampleTest {
         val a = 100
         val b = 20
 
-        `when`(OP.addTwoInt(a, b)).thenReturn(a + b)
+        `when`(Operators.addTwoInt(a, b)).thenReturn(a + b)
 
         val result = CE.addTwoNumbers(a, b)
 
