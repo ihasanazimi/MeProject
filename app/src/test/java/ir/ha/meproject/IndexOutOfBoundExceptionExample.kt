@@ -31,7 +31,7 @@ class IndexOutOfBoundExceptionExampleTest {
 
     @Test
     fun testException_IndexOutOfBound2() {
-        val ob: IndexOutOfBoundExceptionExample = IndexOutOfBoundExceptionExample()
+        val ob = IndexOutOfBoundExceptionExample()
         try {
             val value = ob.getValue(2)
             println("value of getvalue() is : $value")
