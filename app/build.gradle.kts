@@ -75,6 +75,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
+
     // base
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/temp1Fragment">
+
+    <fragment
+        android:id="@+id/temp1Fragment"
+        android:name="ir.ha.meproject.presentation.features.fragments.temp1.Temp1Fragment"
+        android:label="Temp1Fragment"
+        tools:layout="@layout/fragment_temp1">
+        <action
+            android:id="@+id/action_temp1Fragment_to_temp2Fragment"
+            app:destination="@id/temp2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/temp2Fragment"
+        android:name="ir.ha.meproject.presentation.features.fragments.temp2.Temp2Fragment"
+        android:label="Temp2Fragment"
+        tools:layout="@layout/fragment_temp2">
+
+
+        <argument
+            android:name="argument"
+            app:argType="string"
+            app:nullable="true"
+            />
+        <action
+            android:id="@+id/action_temp2Fragment_to_temp3Fragment"
+            app:destination="@id/temp3Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/temp3Fragment"
+        android:name="ir.ha.meproject.presentation.features.fragments.temp3.Temp3Fragment"
+        android:label="Temp3Fragment"
+        tools:layout="@layout/fragment_temp3" >
+
+
+        <argument
+            android:name="argument"
+            app:argType="string"
+            app:nullable="true"
+            />
+
+
+    </fragment>
+</navigation>
