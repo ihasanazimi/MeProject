@@ -29,22 +29,11 @@ class UiTests {
     @Before
     fun setup() {
         Log.i(TAG, "setup: ")
-        /*activityScenarioRule.scenario.onActivity { activity ->
-            val navHostFragment = activity.supportFragmentManager.primaryNavigationFragment
-
-            val temp1Fragment = navHostFragment?.childFragmentManager?.fragments?.find { it is Temp1Fragment } as? Temp1Fragment
-
-            if (temp1Fragment != null) {
-                idleResources = temp1Fragment.getIdlingResource()
-                IdlingRegistry.getInstance().register(idleResources)
-            }
-        }*/
     }
 
     @After
     fun tearDown() {
         Log.i(TAG, "tearDown: ")
-        /*IdlingRegistry.getInstance().unregister(idleResources)*/
     }
 
     @Test
