@@ -5,9 +5,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import ir.ha.meproject.R
 import ir.ha.meproject.databinding.ActivityMainBinding
-import ir.ha.meproject.presentation.features.fragments.temp1.Temp1Fragment
 import ir.ha.meproject.common.base.BaseActivity
-import ir.ha.meproject.common.extensions.addFragmentByAnimation
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 

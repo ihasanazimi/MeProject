@@ -1,17 +1,17 @@
-package ir.ha.meproject.presentation.features.fragments.temp2
+package ir.ha.meproject.presentation.features.fragments.home
 
 import androidx.navigation.fragment.findNavController
-import ir.ha.meproject.databinding.FragmentTemp2Binding
+import ir.ha.meproject.databinding.FragmentHomeBinding
 import ir.ha.meproject.common.base.BaseFragment
 import ir.ha.meproject.common.extensions.singleClick
 
-class Temp2Fragment : BaseFragment<FragmentTemp2Binding>(FragmentTemp2Binding::inflate) {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private lateinit var args : Temp2FragmentArgs
+    private lateinit var args : HomeFragmentArgs
 
     override fun initializing() {
         super.initializing()
-        args = Temp2FragmentArgs.fromBundle(requireArguments())
+        args = HomeFragmentArgs.fromBundle(requireArguments())
     }
 
 
@@ -26,7 +26,7 @@ class Temp2Fragment : BaseFragment<FragmentTemp2Binding>(FragmentTemp2Binding::i
         super.listeners()
 
         binding.goToNextPage.singleClick {
-            findNavController().navigate(Temp2FragmentDirections.actionTemp2FragmentToTemp3Fragment("Zahra"))
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMoreFragment("Zahra"))
         }
     }
 
