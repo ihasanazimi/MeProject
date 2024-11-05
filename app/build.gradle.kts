@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "ir.ha.meproject.helper.CustomTestRunner"
     }
 
     buildTypes {
@@ -79,7 +79,7 @@ dependencies {
     // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+//    androidTestImplementation(libs.androidx.espresso.core)
 
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
@@ -87,6 +87,11 @@ dependencies {
     androidTestImplementation("androidx.fragment:fragment-testing:1.5.5")
     androidTestImplementation("androidx.test:runner:1.5.0") // Make sure to have this dependency
     androidTestImplementation("androidx.test.ext:junit:1.1.5") // Adjust version as needed
+
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+//    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+
+    androidTestUtil("androidx.test:orchestrator:1.4.1")
 
     // base
     implementation(libs.androidx.activity)

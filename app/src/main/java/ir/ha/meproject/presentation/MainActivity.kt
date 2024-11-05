@@ -3,10 +3,13 @@ package ir.ha.meproject.presentation
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import dagger.hilt.android.AndroidEntryPoint
 import ir.ha.meproject.R
 import ir.ha.meproject.databinding.ActivityMainBinding
 import ir.ha.meproject.common.base.BaseActivity
 
+
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun initializing() {

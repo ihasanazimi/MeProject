@@ -5,6 +5,7 @@ import ir.ha.meproject.databinding.FragmentHomeBinding
 import ir.ha.meproject.common.base.BaseFragment
 import ir.ha.meproject.common.extensions.singleClick
 
+
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private lateinit var args : HomeFragmentArgs

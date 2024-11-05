@@ -4,6 +4,21 @@ import android.util.Log
 import androidx.test.espresso.IdlingResource
 import java.util.concurrent.atomic.AtomicInteger
 
+
+
+enum class IdlingResourcesKeys{
+    SPLASH , HOME , MORE
+}
+
+private val IdlingResourcesHash = hashMapOf<IdlingResourcesKeys, Any>()
+fun <T>getIdlingResource(key : IdlingResourcesKeys) = IdlingResourcesHash[key] as T
+fun <T>createAndReturnIdlingResource(key : IdlingResourcesKeys, resource : IdlingResource) : T? {
+    IdlingResourcesHash[key] = resource
+    return getIdlingResource(key) as T
+}
+
+
+
 class MyIdlingResource(val tag: String) : IdlingResource {
 
     @Volatile
