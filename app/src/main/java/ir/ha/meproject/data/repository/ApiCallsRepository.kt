@@ -8,8 +8,11 @@ import ir.ha.meproject.data.model.LocalException
 import ir.ha.meproject.data.model.ResponseState
 import ir.ha.meproject.data.model.SampleObject
 import ir.ha.meproject.data.remote.ApiServices
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface SplashApiCallsRepository {
@@ -28,7 +31,6 @@ class SplashApiCallsRepositoryImpl @Inject constructor(val apiServices: ApiServi
 
     override suspend fun apiCall1() = flow {
         try {
-
             myIdlingResource = createAndReturnIdlingResource<MyCountingIdlingResource>(
                 key = IdlingResourcesKeys.SPLASH,
                 resource = MyCountingIdlingResource(IdlingResourcesKeys.SPLASH.name)
@@ -44,7 +46,7 @@ class SplashApiCallsRepositoryImpl @Inject constructor(val apiServices: ApiServi
                 }
             }
         } catch (e : Exception){
-            Log.i(TAG, "apiCall1: ")
+            Log.i(TAG, "apiCall1: ${e.message} ")
             emit(ResponseState.Error(LocalException()))
         }
     }

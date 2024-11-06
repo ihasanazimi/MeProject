@@ -50,6 +50,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                     is ResponseState.Error -> {
                         Log.i(TAG, "observers ResponseState.Error: ")
                         Snackbar.make(binding.root, "ERROR", Snackbar.LENGTH_LONG).show()
+                        binding.tv.text = "ERROR"
                     }
 
                 }

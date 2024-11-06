@@ -20,12 +20,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+
+    @Provides
+    @Singleton
+    fun provideUrl(): String = "http://mocki.io/v1//"
+
     @Named("regular_retrofit")
     @Provides
     @Singleton
-    fun provideRetrofit() : Retrofit.Builder{
+    fun provideRetrofit(baseUrl : String) : Retrofit.Builder{
         return Retrofit.Builder()
-            .baseUrl("https://mocki.io/v1/")
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
     }
 
@@ -36,8 +41,6 @@ object NetworkModule {
     }
 
 }
-
-
 
 
 @Module

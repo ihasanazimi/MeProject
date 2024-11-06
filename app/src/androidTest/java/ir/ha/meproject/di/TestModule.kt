@@ -2,6 +2,7 @@ package ir.ha.meproject.di
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import ir.ha.meproject.data.remote.ApiServices
@@ -21,20 +22,22 @@ import javax.inject.Singleton
 )
 object TestNetworkModule {
 
+
+    @Provides
+    @Singleton
+    fun provideUrl(): String = "http://localhost:8080/"
+
     @Provides
     @Singleton
     fun provideMockWebServer(): MockWebServer = runBlocking {
         val mockWebServer = MockWebServer()
-        withContext(Dispatchers.IO) { mockWebServer.start(8080) } // Start on IO thread
         mockWebServer
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(mockWebServer: MockWebServer): Retrofit.Builder {
-        val mockUrl = runBlocking(Dispatchers.IO) {
-            mockWebServer.url("http://127.0.0.1/").toString()
-        }
+    fun provideRetrofit(mockWebServer: MockWebServer , baseUrl: String): Retrofit.Builder {
+        val mockUrl = mockWebServer.url(baseUrl).toString()
         return Retrofit.Builder()
             .baseUrl(mockUrl)
             .addConverterFactory(GsonConverterFactory.create())

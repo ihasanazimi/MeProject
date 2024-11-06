@@ -1,6 +1,5 @@
 package ir.ha.meproject
 
-import android.os.StrictMode
 import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -11,20 +10,19 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.MediumTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import ir.ha.meproject.common.espresso_util.IdlingResourcesKeys
 import ir.ha.meproject.common.espresso_util.MyCountingIdlingResource
 import ir.ha.meproject.common.espresso_util.MyIdlingResource
 import ir.ha.meproject.common.espresso_util.getIdlingResource
-import ir.ha.meproject.data.remote.ApiServices
+import ir.ha.meproject.di.NetworkModule
 import ir.ha.meproject.presentation.MainActivity
 import ir.ha.meproject.presentation.features.fragments.more.MoreFragment
 import ir.ha.meproject.presentation.features.fragments.more.MoreFragmentArgs
 import ir.ha.meproject.presentation.features.fragments.splash.SplashFragment
 import ir.ha.meproject.presentation.test_activity.TestActivity
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -33,10 +31,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
-
+@UninstallModules(NetworkModule::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-@MediumTest
 class UiTests {
 
     val TAG = this::class.java.simpleName
@@ -47,13 +44,13 @@ class UiTests {
     @Inject
     lateinit var mockWebServer: MockWebServer
 
+    private val mockWebServerDispatcher = MockWebServerDispatcher()
+
     @Before
     fun setup() {
         Log.i(TAG, "setup: ")
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-            .permitAll()
-            .build())
         hiltRule.inject()
+        mockWebServer.start(8080)
     }
 
     @After
@@ -88,15 +85,11 @@ class UiTests {
 
     @Test
     fun integration_between_fragments_TEST_2() {
-        Log.i(TAG, "check_navigate_and_scenario_from_splash_to_lastFragment_is_correct_or_no_by_counting_TEST: ")
 
-
-        val mockResponse = MockResponse()
-            .setResponseCode(404)
-            .setBody("{\"error\": \"Not Found\"}")
-        mockWebServer.enqueue(mockResponse)
 
         var idleResources: MyCountingIdlingResource? = null
+
+        mockWebServer.dispatcher = mockWebServerDispatcher.RequestDispatcher()
         val activityScenarioRule = ActivityScenario.launch(MainActivity::class.java)
 
         activityScenarioRule.onActivity { activity ->
