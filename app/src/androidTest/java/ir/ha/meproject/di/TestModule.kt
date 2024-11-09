@@ -1,8 +1,12 @@
 package ir.ha.meproject.di
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import ir.ha.meproject.data.remote.ApiServices
@@ -15,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import javax.net.ssl.SSLSession
 
 
 @Module
@@ -33,21 +38,44 @@ object TestNetworkModule {
     @Singleton
     fun provideMockWebServer(): MockWebServer = MockWebServer()
 
+
     @Provides
     @Singleton
-    fun provideRetrofit(mockWebServer: MockWebServer , baseUrl: String): Retrofit.Builder {
+    fun provideContext(@ApplicationContext appContext: Context): Context = appContext
 
-        val client = OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)   // Connection timeout
-            .readTimeout(10, TimeUnit.SECONDS)      // Read timeout
-            .writeTimeout(10, TimeUnit.SECONDS)     // Write timeout
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        context: Context,
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .followSslRedirects(false)
+            .addInterceptor(
+                ChuckerInterceptor.Builder(context)
+                    .redactHeaders("Auth-Token", "Bearer")
+                    .build()
+            )
+            .addNetworkInterceptor(StethoInterceptor())
+            .hostnameVerifier { hostname: String, session: SSLSession -> true }
             .build()
+    }
 
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+        mockWebServer: MockWebServer ,
+        baseUrl: String,
+        okHttpClient: OkHttpClient
+    ): Retrofit.Builder {
 
         val mockUrl = mockWebServer.url(baseUrl).toString()
         return Retrofit.Builder()
             .baseUrl(mockUrl)
-            .client(client)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
     }
 
