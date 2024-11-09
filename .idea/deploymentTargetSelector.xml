@@ -14,6 +14,9 @@
       <SelectionState runConfigName="integration_between_splash_api_call_happen_error()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="integration_between_splash_api_call_happen_successfully()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>

@@ -5,14 +5,14 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
 import dagger.hilt.android.testing.HiltTestApplication
 import java.io.BufferedReader
+import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 
 object FileReader {
     fun readStringFromFile(fileName: String): String {
         try {
-            val inputStream = (InstrumentationRegistry.getInstrumentation().targetContext
-                .applicationContext as HiltTestApplication).assets.open(fileName)
+            val inputStream = (InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as HiltTestApplication).assets.open(fileName)
             val builder = StringBuilder()
             val reader = InputStreamReader(inputStream, "UTF-8")
             reader.readLines().forEach {
@@ -30,6 +30,11 @@ object FileReader {
     }
 
 
+    @Throws(IOException::class)
+    fun writeToFile(context: Context, fileName: String, data: String) {
+        val file = File(context.filesDir, fileName)
+        file.writeText(data)
+    }
 
 
     inline fun <reified T> parseJsonFromAssets(context: Context, fileName: String): T? {

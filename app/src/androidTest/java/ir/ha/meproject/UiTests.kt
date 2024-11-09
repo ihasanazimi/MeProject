@@ -147,7 +147,7 @@ class UiTests {
     @Test
     fun launch_more_fragment_and_check_it_argument_TEST() {
 
-        val myIdlingResource = MyIdlingResource("launch_more_fragment_and_check_argument").apply {
+        val myIdlingResource = MyIdlingResource(IdlingResourcesKeys.SPLASH.name).apply {
             setIdleState(false)
             IdlingRegistry.getInstance().register(this)
         }
