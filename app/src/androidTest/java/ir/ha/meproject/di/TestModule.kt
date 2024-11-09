@@ -31,10 +31,7 @@ object TestNetworkModule {
 
     @Provides
     @Singleton
-    fun provideMockWebServer(): MockWebServer = runBlocking {
-        val mockWebServer = MockWebServer()
-        mockWebServer
-    }
+    fun provideMockWebServer(): MockWebServer = MockWebServer()
 
     @Provides
     @Singleton
