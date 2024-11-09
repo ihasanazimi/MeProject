@@ -86,7 +86,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
-    androidTestImplementation("androidx.fragment:fragment-testing:1.5.5")
+    androidTestImplementation("androidx.fragment:fragment-testing:1.5.4")
     androidTestImplementation("androidx.test:runner:1.5.0") // Make sure to have this dependency
     androidTestImplementation("androidx.test.ext:junit:1.1.5") // Adjust version as needed
 
@@ -94,6 +94,11 @@ dependencies {
 //    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 
     androidTestUtil("androidx.test:orchestrator:1.4.1")
+
+    testImplementation("org.mockito:mockito-core:3.+")
+
+
+    androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
 
     // base
     implementation(libs.androidx.activity)

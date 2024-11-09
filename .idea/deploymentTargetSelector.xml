@@ -8,13 +8,16 @@
       <SelectionState runConfigName="launch_more_fragment_and_check_it_argument_TEST()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="integration_between_fragments_TEST_2()">
+      <SelectionState runConfigName="launch_more_fragment_and_check_it_argument_TEST2()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="integration_between_splash_api_call_happen_error()">
+      <SelectionState runConfigName="createTheFakeNavigationComponent()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="integration_between_splash_api_call_happen_successfully()">
+      <SelectionState runConfigName="testNavigationFromHomeToMoreFragment()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="MainActivity">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

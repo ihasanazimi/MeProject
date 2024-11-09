@@ -26,7 +26,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun listeners() {
         super.listeners()
 
-        binding.goToNextPage.singleClick {
+        binding.goToMoreFragment.singleClick {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMoreFragment("Zahra"))
         }
     }
