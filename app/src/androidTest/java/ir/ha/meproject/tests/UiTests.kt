@@ -1,31 +1,21 @@
-package ir.ha.meproject
+package ir.ha.meproject.tests
 
 import android.content.Intent
 import android.util.Log
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import ir.ha.meproject.R
 import ir.ha.meproject.common.espresso_util.IdlingResourcesKeys
 import ir.ha.meproject.common.espresso_util.MyCountingIdlingResource
 import ir.ha.meproject.common.espresso_util.MyIdlingResource
@@ -33,19 +23,16 @@ import ir.ha.meproject.common.espresso_util.getIdlingResource
 import ir.ha.meproject.di.NetworkModule
 import ir.ha.meproject.helper.MockWebServerDispatcher
 import ir.ha.meproject.presentation.MainActivity
-import ir.ha.meproject.presentation.features.fragments.home.HomeFragment
 import ir.ha.meproject.presentation.features.fragments.more.MoreFragment
 import ir.ha.meproject.presentation.features.fragments.more.MoreFragmentArgs
 import ir.ha.meproject.presentation.features.fragments.splash.SplashFragment
 import ir.ha.meproject.presentation.test_activity.TestActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import javax.inject.Inject
 
 @UninstallModules(NetworkModule::class)

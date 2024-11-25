@@ -69,10 +69,9 @@ android {
 //        correctErrorTypes = true
 //    }
 
-//    /** for pdf generator */
-//    packagingOptions {
-//        exclude("META-INF/DEPENDENCIES")
-//    }
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 
 }
 
@@ -81,9 +80,8 @@ dependencies {
     // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-//    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.core)
 
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
     androidTestImplementation("androidx.fragment:fragment-testing:1.5.4")
@@ -91,14 +89,20 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5") // Adjust version as needed
 
     androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-//    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 
     androidTestUtil("androidx.test:orchestrator:1.4.1")
 
-    testImplementation("org.mockito:mockito-core:3.+")
-
+    // mockk
+    testImplementation("io.mockk:mockk:1.13.4")
+    androidTestImplementation("io.mockk:mockk-android:1.13.9")
 
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
+
+
+    // coroutine test
+    val coroutineTest = "1.7.3"
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
 
     // base
     implementation(libs.androidx.activity)

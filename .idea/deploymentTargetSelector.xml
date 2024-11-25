@@ -5,13 +5,13 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="launch_more_fragment_and_check_it_argument_TEST()">
+      <SelectionState runConfigName="Tests in 'ir.ha.meproject'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="createTheFakeNavigationComponent()">
+      <SelectionState runConfigName="integration_between_fragments_TEST()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MainActivity">
+      <SelectionState runConfigName="testForViewModels()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
