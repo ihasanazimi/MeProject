@@ -196,12 +196,4 @@ class UiTests {
         activityScenario.close()
     }
 
-
-    @Test
-    fun createTheFakeNavigationComponent() {
-
-        val navController = mock()
-    }
-
-
 }

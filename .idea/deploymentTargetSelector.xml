@@ -8,13 +8,7 @@
       <SelectionState runConfigName="launch_more_fragment_and_check_it_argument_TEST()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="launch_more_fragment_and_check_it_argument_TEST2()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="createTheFakeNavigationComponent()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="testNavigationFromHomeToMoreFragment()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="MainActivity">
