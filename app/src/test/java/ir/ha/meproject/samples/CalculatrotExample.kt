@@ -1,14 +1,11 @@
 package ir.ha.meproject.samples
 
+import io.mockk.every
+import io.mockk.mockk
 import io.mockk.spyk
+import ir.ha.meproject.helper.BaseTest
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.spy
-import org.mockito.Mockito.`when`
-import org.mockito.junit.MockitoJUnitRunner
 import kotlin.test.assertEquals
 
 class CalculatorExample (private val operators: Operators) {
@@ -21,16 +18,15 @@ object Operators {
 
 
 
-@RunWith(MockitoJUnitRunner::class)
-class CalculatorExampleTest {
+class CalculatorExampleTest : BaseTest(){
 
     lateinit var CE: CalculatorExample
     lateinit var OP: Operators
 
-    @Before
-    fun onSetup() {
-        OP = Mockito.mock(Operators::class.java)
-        CE = CalculatorExample(OP)
+    override fun setup() {
+        super.setup()
+        OP = mockk()
+        CE = spyk(CalculatorExample(OP))
     }
 
     @Test
@@ -39,11 +35,9 @@ class CalculatorExampleTest {
         val a = 100
         val b = 20
 
-
-        `when`(OP.addTwoInt(a, b)).thenReturn(a + b)
+        every { OP.addTwoInt(a, b) } returns (a + b)
 
         val result = CE.addTwoNumbers(a, b)
-
         println(" after add two number : $result")
         assertEquals(result,120)
 

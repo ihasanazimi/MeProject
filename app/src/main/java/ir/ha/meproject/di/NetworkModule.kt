@@ -1,47 +1,27 @@
 package ir.ha.meproject.di
 
 import android.content.Context
-import dagger.Binds
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ir.ha.meproject.data.repository.UserRepository
-import ir.ha.meproject.data.repository.UserRepositoryImpl
-import ir.ha.meproject.domain.UserUseCase
-import ir.ha.meproject.domain.UserUseCaseImpl
+import ir.ha.meproject.data.remote.ApiServices
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
-
-
-@Module
-@InstallIn(SingletonComponent::class)
-object Modules {
-
-    @Singleton
-    @Provides
-    fun provideContext(@ApplicationContext appContext: Context): Context = appContext
-
-    @Singleton
-    @Provides
-    fun provideUserUseCase(userRepository: UserRepository): UserUseCase {
-        return UserUseCaseImpl(userRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideUserRepository(): UserRepository {
-        return UserRepositoryImpl()
-    }
-
-
-}
-
+import javax.net.ssl.SSLSession
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
 
 
     @Provides
@@ -79,7 +59,8 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(
         baseUrl : String ,
-        okHttpClient: OkHttpClient) : Retrofit.Builder{
+        okHttpClient: OkHttpClient
+    ) : Retrofit.Builder{
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -93,31 +74,5 @@ object NetworkModule {
         return retrofit.build().create(ApiServices::class.java)
     }
 
-}
 
-
-@Module
-@InstallIn(SingletonComponent::class)
-object UseCasesModule{
-
-    @Provides
-    @Singleton
-    fun provideSplashApiCallsUseCase(apiCallsRepository: SplashApiCallsRepository) : SplashApiCallsUseCase {
-        return SplashApiCallsUseCaseImpl(apiCallsRepository)
-    }
-
-}
-
-
-
-
-@Module
-@InstallIn(SingletonComponent::class)
-object RepositoryModules{
-
-    @Provides
-    @Singleton
-    fun provideSplashApiCallsRepository(apiServices: ApiServices) : SplashApiCallsRepository {
-        return SplashApiCallsRepositoryImpl(apiServices)
-    }
 }

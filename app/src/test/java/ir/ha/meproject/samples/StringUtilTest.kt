@@ -1,11 +1,12 @@
 package ir.ha.meproject.samples
 
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import ir.ha.meproject.helper.BaseTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.clearAllCaches
-import org.mockito.Mockito.`when`
 import kotlin.test.assertEquals
 
 class StringUtil (private val operators: StringOperators) {
@@ -24,7 +25,7 @@ class StringUtilTest {
 
     @Before
     fun onSetup() {
-        operators = Mockito.mock(StringOperators::class.java)
+        operators = mockk()
         stringUtil = StringUtil(operators)
     }
 
@@ -32,11 +33,8 @@ class StringUtilTest {
     fun addName_and_printValue() {
 
         val name = "Farzad"
-
-        `when`(StringOperators.addWord(name)).thenReturn(name)
-
+        every { StringOperators.addWord(name) } returns name
         val result = stringUtil.addSomeWord(name)
-
         println("result value is : $result")
         assertEquals(result,name)
 
@@ -44,20 +42,14 @@ class StringUtilTest {
 }
 
 
-class StringUtilTest2 {
+class StringUtilTest2 : BaseTest() {
 
     private lateinit var stringUtil: StringUtil
     private val operators = StringOperators
 
-    @Before
-    fun onSetup() {
+    override fun setup() {
+        super.setup()
         stringUtil = StringUtil(operators)
-    }
-
-
-    @After
-    fun onRest(){
-        clearAllCaches()
     }
 
     @Test

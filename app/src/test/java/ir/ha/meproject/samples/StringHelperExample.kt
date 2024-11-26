@@ -1,5 +1,6 @@
 package ir.ha.meproject.samples
 
+import io.mockk.spyk
 import ir.ha.meproject.data.repository.SampleRepositoryImpl
 import ir.ha.meproject.domain.SampleUseCaseImpl
 import org.junit.Assert.assertEquals
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import org.mockito.Mockito
 
 
 /** JUnit5*/
@@ -68,8 +68,8 @@ class StringHelperParameterTest0 (private val input: Int, private val expectedVa
 
     @Test
     fun testParameterized_IsPositiveNumberOrNot() {
-        repo = Mockito.spy(SampleRepositoryImpl())
-        useCase = Mockito.spy(SampleUseCaseImpl(repo))
+        repo = spyk(SampleRepositoryImpl())
+        useCase = spyk(SampleUseCaseImpl(repo))
         val result = useCase.isPositiveNumber(input)
         println("result is $result")
         assertEquals(expectedValue,result)
@@ -91,8 +91,8 @@ class StringHelperParameterTest1 {
 
         @JvmStatic
         fun provideTestData() : List<Array<Any>> {
-            repo = Mockito.spy(SampleRepositoryImpl())
-            useCase = Mockito.spy(SampleUseCaseImpl(repo))
+            repo = spyk(SampleRepositoryImpl())
+            useCase = spyk(SampleUseCaseImpl(repo))
             return useCase.getNumberByAnswers()
         }
     }
@@ -119,8 +119,8 @@ class StringHelperParameterTest2 {
     @ParameterizedTest
     @ValueSource(ints = [-1, 0, 1, 2, 3])
     fun testIsPositiveNumber(number: Int) {
-        val repo = Mockito.spy(SampleRepositoryImpl())
-        val useCase = Mockito.spy(SampleUseCaseImpl(repo))
+        val repo = spyk(SampleRepositoryImpl())
+        val useCase = spyk(SampleUseCaseImpl(repo))
         val result = useCase.isPositiveNumber(number)
         println("number is $number and result is $result")
         Assertions.assertEquals(number >= 0 , result)
@@ -141,8 +141,8 @@ class StringHelperParameterTest3 {
         "1,true"
     )
     fun testIsPositiveNumber(input: Int, expected: Boolean) {
-        val repo = Mockito.spy(SampleRepositoryImpl())
-        val useCase = Mockito.spy(SampleUseCaseImpl(repo))
+        val repo = spyk(SampleRepositoryImpl())
+        val useCase = spyk(SampleUseCaseImpl(repo))
         val result = useCase.isPositiveNumber(input)
         println("input is $input and result is $result")
         assertEquals(expected, result)
@@ -166,7 +166,7 @@ class MathUtils {
 
 class MathUtilsTest {
 
-    private val mathUtil = Mockito.spy(MathUtils())
+    private val mathUtil = spyk(MathUtils())
 
     companion object {
         @JvmStatic
@@ -203,7 +203,7 @@ class NumberUtils {
 @RunWith(Parameterized::class)
 class NumberUtilsTest1(private val number: Int, private val isEvenExpected: Boolean) {
 
-    private val numberUtils = Mockito.spy(NumberUtils())
+    private val numberUtils = spyk(NumberUtils())
 
     companion object {
         @JvmStatic

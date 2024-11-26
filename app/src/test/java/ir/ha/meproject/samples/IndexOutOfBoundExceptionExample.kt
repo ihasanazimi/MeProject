@@ -1,8 +1,6 @@
 package ir.ha.meproject.samples
 
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
 
 // Handling exceptions in unit tests
@@ -16,7 +14,6 @@ class IndexOutOfBoundExceptionExample {
 }
 
 
-@RunWith(MockitoJUnitRunner::class)
 class IndexOutOfBoundExceptionExampleTest {
     @Test
     fun testException_IndexOutOfBound1() {

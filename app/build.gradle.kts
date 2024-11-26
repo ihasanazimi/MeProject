@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "ir.ha.meproject.helper.CustomTestRunner"
+        testInstrumentationRunner = "ir.ha.meproject.helper"
     }
 
     buildTypes {
@@ -69,14 +69,6 @@ android {
         }
     }
 
-//    kapt {
-//        correctErrorTypes = true
-//    }
-
-    packagingOptions {
-        resources.excludes.add("META-INF/*")
-    }
-
     packaging  {
         resources {
             excludes += "META-INF/LICENSE.md"
@@ -99,45 +91,35 @@ val exclusions = listOf(
 )
 
 
-
-
-tasks.withType(Test::class) {
-    configure<JacocoTaskExtension> {
-        isIncludeNoLocationClasses = true
-        excludes = listOf("jdk.internal.*")
-    }
-}
-
 dependencies {
 
-    // test
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-
-
+    // test Utils
     implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
-    androidTestImplementation("androidx.fragment:fragment-testing:1.5.4")
-    androidTestImplementation("androidx.test:runner:1.5.0") // Make sure to have this dependency
-    androidTestImplementation("androidx.test.ext:junit:1.1.5") // Adjust version as needed
-
-    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") // KotlinCoroutineTesting
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     androidTestUtil("androidx.test:orchestrator:1.4.1")
 
-    // mockk
-    testImplementation("io.mockk:mockk:1.13.4")
-    androidTestImplementation("io.mockk:mockk-android:1.13.9")
+    // ANDROID TEST Lib`s
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("androidx.test:runner:1.5.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.fragment:fragment-testing:1.5.4") // FragmentTesting
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.3") // mock webServer
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1") // hilt Testing
+    androidTestImplementation("io.mockk:mockk-android:1.13.10") // mockk for androidTest
+    androidTestImplementation("androidx.navigation:navigation-testing:2.8.3") // navigation-testing
 
-    androidTestImplementation("androidx.navigation:navigation-testing:2.8.3")
+    // UNIT Test Lib`s
+    testImplementation(libs.junit)
+    testImplementation("org.jetbrains.kotlin:kotlin-test") // kotlin test
+    testImplementation("io.mockk:mockk:1.13.10") // mockk for unit test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") // KotlinCoroutineTesting
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
 
-
-    // coroutine test
-    val coroutineTest = "1.7.3"
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTest")
 
     // base
     implementation(libs.androidx.activity)
@@ -252,7 +234,6 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxandroid:2.0.2")
     */
 
-
     // Koin
     //val koinVersion= "3.5.0"
     //implementation("io.insert-koin:koin-android:$koinVersion")
@@ -278,38 +259,6 @@ dependencies {
     implementation(libs.stetho)
     implementation(libs.stetho.okhttp3)
     implementation(libs.stetho.js.rhino)
-
-
-    testImplementation("org.mockito:mockito-core:4.5.1")
-    testImplementation("org.mockito:mockito-inline:4.5.1")
-    testImplementation("io.mockk:mockk:1.12.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
-
-
-    // mockk
-    val mockk = "1.13.10"
-    testImplementation("io.mockk:mockk:$mockk")
-    androidTestImplementation("io.mockk:mockk-android:$mockk")
-
-
-
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0") // or the latest version
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0") // for running tests
-
-
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
-
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-
-
-
-
-
 
 
 }

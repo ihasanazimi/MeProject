@@ -15,7 +15,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -34,16 +33,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class UserUseCaseTest1 {
 
-    private val testDispatcher = StandardTestDispatcher()
     private var userUseCase = spyk(UserUseCaseImpl(UserRepositoryImpl()))
     private var mockUsers = arrayListOf<User>()
 
     @Before
     fun setUp() {
-        kotlinx.coroutines.Dispatchers.setMain(testDispatcher)
         mockUsers.addAll(
             arrayListOf(
                 User("Omid", "Sadr", "30", "USA", "New York"),
@@ -61,7 +57,6 @@ class UserUseCaseTest1 {
     fun reset() {
         // Reset the dispatcher
         mockUsers.clear()
-        kotlinx.coroutines.Dispatchers.resetMain()
     }
 
     /***  Correctness by spyk */

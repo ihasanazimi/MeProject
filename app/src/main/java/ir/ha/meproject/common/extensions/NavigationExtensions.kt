@@ -1,8 +1,7 @@
 package ir.ha.meproject.common.extensions
 
-/** todo : this file commented for this branch */
 
-/*import android.util.Log
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
@@ -29,4 +28,4 @@ fun NavController.safeNavigateByExtra(
             Log.d("", "safeNavigateByExtra: ${it.message}")
         }
     }
-}*/
+}
