@@ -34,8 +34,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             insets
         }
 
+//        addFragmentByAnimation(ProfileFragment(), ProfileFragment::class.java.simpleName,false,true,R.id.main)
+
+
         // Initialize the NavController
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
     }
+
 }

@@ -41,6 +41,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+
             resValue("string", "clear_text_config","true")
         }
     }
@@ -73,6 +77,35 @@ android {
         resources.excludes.add("META-INF/*")
     }
 
+    packaging  {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+        }
+    }
+
+}
+
+val exclusions = listOf(
+    "**/R.class",
+    "**/R\$*.class",
+    "**/BuildConfig.*",
+    "**/Manifest*.*",
+    "**/*Test*.*"
+)
+
+
+
+
+tasks.withType(Test::class) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
+    }
 }
 
 dependencies {
@@ -81,6 +114,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+
 
     implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
@@ -111,7 +146,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.androidx.core.animation)
-
+    implementation(libs.androidx.legacy.support.v4)
 
     // Data Binding Runtime
     implementation(libs.androidx.databinding.runtime)
@@ -132,7 +167,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.extensions)
 
     /*  Dagger Hilt  */
-    implementation(libs.androidx.legacy.support.v4)
     androidTestImplementation(libs.androidx.rules)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
@@ -244,6 +278,36 @@ dependencies {
     implementation(libs.stetho)
     implementation(libs.stetho.okhttp3)
     implementation(libs.stetho.js.rhino)
+
+
+    testImplementation("org.mockito:mockito-core:4.5.1")
+    testImplementation("org.mockito:mockito-inline:4.5.1")
+    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+
+
+    // mockk
+    val mockk = "1.13.10"
+    testImplementation("io.mockk:mockk:$mockk")
+    androidTestImplementation("io.mockk:mockk-android:$mockk")
+
+
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0") // or the latest version
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0") // for running tests
+
+
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
+
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+
+
 
 
 

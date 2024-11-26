@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import ir.ha.meproject.R
-import ir.ha.meproject.presentation.MainActivity
+import ir.ha.meproject.presentation.activities.MainActivity
 import ir.ha.meproject.common.extensions.hideKeyboard
 import ir.ha.meproject.common.more.SnackBarHelper
 

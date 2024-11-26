@@ -1,9 +1,13 @@
 package ir.ha.meproject.common.file
 
 import android.content.Context
+import com.google.gson.Gson
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
 
 object AssetHelper {
 
@@ -50,6 +54,17 @@ object AssetHelper {
         }
     }
 
+
+    inline fun <reified T> parseJson(classLoader:ClassLoader?,fileName:String):T{
+        println("parseJson")
+        val inputStream = classLoader?.getResourceAsStream(fileName)
+        val reader = BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
+//    println("reader ${readTextFile(inputStream!!)}")
+        val gson = Gson()
+        val dataClass = gson.fromJson(reader.readText(),T::class.java)
+        println("final dataClass: $dataClass")
+        return dataClass
+    }
 
 
 }

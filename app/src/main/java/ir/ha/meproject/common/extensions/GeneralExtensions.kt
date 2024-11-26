@@ -691,3 +691,35 @@ fun isValidPostalCode(postalCode: String): Boolean {
 
     return true
 }
+
+
+
+fun isValidBankCardNumber(cardNumber: String): Boolean {
+
+    val tempCardNumber = cardNumber.replace("-","")
+
+    return when {
+        tempCardNumber.length != 16 ->  false
+        tempCardNumber[0].toString().toInt() !in 4..6 -> false
+        tempCardNumber.replace("-","").contains("******") -> true
+        else -> {
+            var sum = 0
+            for (i in 0 until 16) {
+                val lastNumber = tempCardNumber[i].toString().asInt()
+                val mult = if (i % 2 == 0) lastNumber*2 else lastNumber
+                sum += if (mult > 9) mult-9 else mult
+            }
+
+            sum % 10 == 0
+        }
+    }
+}
+
+
+fun String.asInt(): Int {
+    return try {
+        replace("،", "").toInt()
+    } catch (ex: Exception) {
+        0
+    }
+}
