@@ -5,7 +5,6 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import ir.ha.meproject.data.remote.ApiServices
