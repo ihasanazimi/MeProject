@@ -12,10 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-interface SplashApiCallsRepository {
+interface ApiCallsRepository {
 
 
     suspend fun apiCall1(): Flow<ResponseState<SampleObject>>
@@ -23,7 +22,9 @@ interface SplashApiCallsRepository {
 }
 
 
-class SplashApiCallsRepositoryImpl @Inject constructor(val apiServices: ApiServices) : SplashApiCallsRepository {
+class ApiCallsRepositoryImpl @Inject constructor(
+    private val apiServices: ApiServices
+) : ApiCallsRepository {
 
     private val TAG = this::class.java.simpleName
 
@@ -31,6 +32,7 @@ class SplashApiCallsRepositoryImpl @Inject constructor(val apiServices: ApiServi
 
     override suspend fun apiCall1() = flow {
         try {
+
             myIdlingResource = createAndReturnIdlingResource<MyCountingIdlingResource>(
                 key = IdlingResourcesKeys.SPLASH,
                 resource = MyCountingIdlingResource(IdlingResourcesKeys.SPLASH.name)
@@ -56,6 +58,6 @@ class SplashApiCallsRepositoryImpl @Inject constructor(val apiServices: ApiServi
             Log.i(TAG, "apiCall1: ${e.message} ")
             emit(ResponseState.Error(LocalException()))
         }!!
-    }
+    }.flowOn(Dispatchers.IO)
 }
 

@@ -29,11 +29,6 @@ object NetworkModule {
     fun provideUrl(): String = "https://mocki.io/v1/"
 
 
-    @Provides
-    @Singleton
-    fun provideContext(@ApplicationContext appContext: Context): Context = appContext
-
-
     @Singleton
     @Provides
     fun provideOkHttpClient(

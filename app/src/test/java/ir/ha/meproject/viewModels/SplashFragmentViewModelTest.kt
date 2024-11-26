@@ -5,41 +5,48 @@ import io.mockk.mockk
 import io.mockk.spyk
 import ir.ha.meproject.data.model.ResponseState
 import ir.ha.meproject.data.model.SampleObject
-import ir.ha.meproject.domain.SplashApiCallsUseCase
+import ir.ha.meproject.di.TestCoroutineDispatchersImpl
+import ir.ha.meproject.domain.ApiCallsUseCase
 import ir.ha.meproject.helper.BaseTest
 import ir.ha.meproject.presentation.features.fragments.splash.SplashFragmentVM
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Test
 
-
-class SplashFragmentViewModelTest : BaseTest(){
+@ExperimentalCoroutinesApi
+class SplashFragmentViewModelTest : BaseTest() {
 
     private lateinit var viewModel: SplashFragmentVM
-    private val splashApiCallsUseCase = mockk<SplashApiCallsUseCase>()
+    private val apiCallsUseCase = mockk<ApiCallsUseCase>()
 
+    private val testDispatcher = StandardTestDispatcher()
+    private val coroutineDispatchersImpl = TestCoroutineDispatchersImpl()
 
     override fun setup() {
         super.setup()
-        viewModel = spyk(SplashFragmentVM(splashApiCallsUseCase))
+        Dispatchers.setMain(testDispatcher)
+        viewModel = spyk(SplashFragmentVM(apiCallsUseCase, coroutineDispatchersImpl))
     }
-
 
     override fun tearDown() {
         super.tearDown()
+        Dispatchers.resetMain()
     }
-
-
 
     @Test
-    fun `testForViewModels`() = runTest {
-        val mockedData = SampleObject(1,"name","description")
-        coEvery { splashApiCallsUseCase.apiCall1() } returns flow { ResponseState.Success(mockedData) }
-        viewModel.callApiCallResult()
-        viewModel.apiCallResult.collect{
-            assert(it is ResponseState.Success)
-            assert(it.data == mockedData)
-        }
+    fun testForViewModels() = runTest(coroutineDispatchersImpl.ioDispatchers()) {
+        val mockedData = SampleObject(1, "name", "description")
+        coEvery { apiCallsUseCase.apiCall1() } returns flow { emit(ResponseState.Success(mockedData)) }.flowOn(Dispatchers.IO)
+        viewModel.apiCall()
+        val result = viewModel.apiCallResult.first()
+        assert(result is ResponseState.Success)
+        assert(result.data == mockedData)
     }
-
 }

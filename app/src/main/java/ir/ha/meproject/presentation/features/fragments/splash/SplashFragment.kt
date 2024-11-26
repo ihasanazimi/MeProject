@@ -22,7 +22,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
     override fun initializing() {
         super.initializing()
-        viewModel.callApiCallResult()
+        viewModel.apiCall()
     }
 
 
