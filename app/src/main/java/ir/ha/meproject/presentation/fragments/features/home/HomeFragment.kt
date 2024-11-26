@@ -1,4 +1,4 @@
-package ir.ha.meproject.presentation.features.fragments.home
+package ir.ha.meproject.presentation.fragments.features.home
 
 import androidx.navigation.fragment.findNavController
 import ir.ha.meproject.databinding.FragmentHomeBinding

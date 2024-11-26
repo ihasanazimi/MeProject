@@ -1,8 +1,8 @@
 package ir.ha.meproject.samples
 
 import io.mockk.spyk
-import ir.ha.meproject.data.repository.SampleRepositoryImpl
-import ir.ha.meproject.domain.SampleUseCaseImpl
+import ir.ha.meproject.data.repository.NumberRepositoryImpl
+import ir.ha.meproject.domain.NumberUseCaseImpl
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
@@ -26,8 +26,8 @@ class StringHelperParameterTest0 (private val input: Int, private val expectedVa
 
     companion object {
 
-        private lateinit var repo: SampleRepositoryImpl
-        private lateinit var useCase: SampleUseCaseImpl
+        private lateinit var repo: NumberRepositoryImpl
+        private lateinit var useCase: NumberUseCaseImpl
 
         @JvmStatic
         @Parameterized.Parameters()
@@ -68,8 +68,8 @@ class StringHelperParameterTest0 (private val input: Int, private val expectedVa
 
     @Test
     fun testParameterized_IsPositiveNumberOrNot() {
-        repo = spyk(SampleRepositoryImpl())
-        useCase = spyk(SampleUseCaseImpl(repo))
+        repo = spyk(NumberRepositoryImpl())
+        useCase = spyk(NumberUseCaseImpl(repo))
         val result = useCase.isPositiveNumber(input)
         println("result is $result")
         assertEquals(expectedValue,result)
@@ -86,13 +86,13 @@ class StringHelperParameterTest1 {
 
     companion object {
 
-        private lateinit var repo : SampleRepositoryImpl
-        private lateinit var useCase : SampleUseCaseImpl
+        private lateinit var repo : NumberRepositoryImpl
+        private lateinit var useCase : NumberUseCaseImpl
 
         @JvmStatic
         fun provideTestData() : List<Array<Any>> {
-            repo = spyk(SampleRepositoryImpl())
-            useCase = spyk(SampleUseCaseImpl(repo))
+            repo = spyk(NumberRepositoryImpl())
+            useCase = spyk(NumberUseCaseImpl(repo))
             return useCase.getNumberByAnswers()
         }
     }
@@ -119,8 +119,8 @@ class StringHelperParameterTest2 {
     @ParameterizedTest
     @ValueSource(ints = [-1, 0, 1, 2, 3])
     fun testIsPositiveNumber(number: Int) {
-        val repo = spyk(SampleRepositoryImpl())
-        val useCase = spyk(SampleUseCaseImpl(repo))
+        val repo = spyk(NumberRepositoryImpl())
+        val useCase = spyk(NumberUseCaseImpl(repo))
         val result = useCase.isPositiveNumber(number)
         println("number is $number and result is $result")
         Assertions.assertEquals(number >= 0 , result)
@@ -141,8 +141,8 @@ class StringHelperParameterTest3 {
         "1,true"
     )
     fun testIsPositiveNumber(input: Int, expected: Boolean) {
-        val repo = spyk(SampleRepositoryImpl())
-        val useCase = spyk(SampleUseCaseImpl(repo))
+        val repo = spyk(NumberRepositoryImpl())
+        val useCase = spyk(NumberUseCaseImpl(repo))
         val result = useCase.isPositiveNumber(input)
         println("input is $input and result is $result")
         assertEquals(expected, result)

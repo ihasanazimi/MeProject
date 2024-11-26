@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 interface ApiCallsUseCase {
 
-    suspend fun apiCall1() : Flow<ResponseState<SampleEntity>>
+    suspend fun apiCall() : Flow<ResponseState<SampleEntity>>
 
 }
 
@@ -19,9 +19,9 @@ class ApiCallsUseCaseImpl @Inject constructor(
 
     private val TAG = this::class.java.simpleName
 
-    override suspend fun apiCall1(): Flow<ResponseState<SampleEntity>> {
+    override suspend fun apiCall(): Flow<ResponseState<SampleEntity>> {
         return apiCallsRepository.apiCall1().also {
-            Log.i(TAG, "apiCall1: ")
+            Log.i(TAG, "apiCall: ")
         }
     }
 

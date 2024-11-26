@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 import ir.ha.meproject.R
 import ir.ha.meproject.common.extensions.hideKeyboard
 import ir.ha.meproject.common.more.SnackBarHelper
-import ir.ha.meproject.presentation.activities.MainActivity
+import ir.ha.meproject.presentation.activities.main.MainActivity
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB

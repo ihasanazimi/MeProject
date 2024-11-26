@@ -1,15 +1,9 @@
-package ir.ha.meproject.presentation.test_activity
+package ir.ha.meproject.presentation.activities.test
 
 import android.os.Bundle
 import android.os.StrictMode
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ir.ha.meproject.R
 import ir.ha.meproject.databinding.ActivityTestBinding
 
 @AndroidEntryPoint

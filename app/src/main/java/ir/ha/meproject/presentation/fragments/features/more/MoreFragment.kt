@@ -1,4 +1,4 @@
-package ir.ha.meproject.presentation.features.fragments.more
+package ir.ha.meproject.presentation.fragments.features.more
 
 import ir.ha.meproject.common.base.BaseFragment
 import ir.ha.meproject.databinding.FragmentMoreBinding

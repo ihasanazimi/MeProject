@@ -1,4 +1,4 @@
-package ir.ha.meproject.tests
+package ir.ha.meproject.samples
 
 import android.content.Intent
 import android.util.Log
@@ -22,11 +22,11 @@ import ir.ha.meproject.common.espresso_util.MyIdlingResource
 import ir.ha.meproject.common.espresso_util.getIdlingResource
 import ir.ha.meproject.di.NetworkModule
 import ir.ha.meproject.helper.MockWebServerDispatcher
-import ir.ha.meproject.presentation.activities.MainActivity
-import ir.ha.meproject.presentation.features.fragments.more.MoreFragment
-import ir.ha.meproject.presentation.features.fragments.more.MoreFragmentArgs
-import ir.ha.meproject.presentation.features.fragments.splash.SplashFragment
-import ir.ha.meproject.presentation.test_activity.TestActivity
+import ir.ha.meproject.presentation.activities.main.MainActivity
+import ir.ha.meproject.presentation.fragments.features.more.MoreFragment
+import ir.ha.meproject.presentation.fragments.features.more.MoreFragmentArgs
+import ir.ha.meproject.presentation.fragments.features.splash.SplashFragment
+import ir.ha.meproject.presentation.activities.test.TestActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After

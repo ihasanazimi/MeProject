@@ -6,6 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ir.ha.meproject.data.repository.CoroutineDispatchers
+import ir.ha.meproject.data.repository.CoroutineDispatchersImpl
 import javax.inject.Singleton
 
 
@@ -16,12 +18,5 @@ object UtilModule {
     @Singleton
     @Provides
     fun provideContext(@ApplicationContext appContext: Context): Context = appContext
-
-
-    @Singleton
-    @Provides
-    fun provideDispatcher() : CoroutineDispatchers{
-        return CoroutineDispatchersImpl()
-    }
 
 }

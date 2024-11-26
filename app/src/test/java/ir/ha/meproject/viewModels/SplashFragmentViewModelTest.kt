@@ -5,10 +5,10 @@ import io.mockk.mockk
 import io.mockk.spyk
 import ir.ha.meproject.data.model.ResponseState
 import ir.ha.meproject.data.model.SampleEntity
-import ir.ha.meproject.di.TestCoroutineDispatchersImpl
+import ir.ha.meproject.data.repository.TestCoroutineDispatchersImpl
 import ir.ha.meproject.domain.ApiCallsUseCase
 import ir.ha.meproject.helper.BaseTest
-import ir.ha.meproject.presentation.features.fragments.splash.SplashFragmentVM
+import ir.ha.meproject.presentation.fragments.features.splash.SplashFragmentVM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -43,7 +43,7 @@ class SplashFragmentViewModelTest : BaseTest() {
     @Test
     fun testForViewModels() = runTest(coroutineDispatchersImpl.ioDispatchers()) {
         val mockedData = SampleEntity(1, "name", "description")
-        coEvery { apiCallsUseCase.apiCall1() } returns flow { emit(ResponseState.Success(mockedData)) }.flowOn(Dispatchers.IO)
+        coEvery { apiCallsUseCase.apiCall() } returns flow { emit(ResponseState.Success(mockedData)) }.flowOn(Dispatchers.IO)
         viewModel.apiCall()
         val result = viewModel.apiCallResult.first()
         assert(result is ResponseState.Success)

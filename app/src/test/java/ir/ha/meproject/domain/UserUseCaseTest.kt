@@ -1,4 +1,4 @@
-package ir.ha.meproject.usecase
+package ir.ha.meproject.domain
 
 
 import io.mockk.coEvery
@@ -8,7 +8,6 @@ import io.mockk.mockk
 import io.mockk.spyk
 import ir.ha.meproject.data.model.UserEntity
 import ir.ha.meproject.data.repository.UserRepositoryImpl
-import ir.ha.meproject.domain.UserUseCaseImpl
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
@@ -16,16 +15,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.coroutines.withTimeout
-import kotlinx.coroutines.yield
 import org.junit.After
-import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -158,34 +154,6 @@ class UserEntityUseCaseTest2 {
 
     }
 
-
-    @Test
-    fun testDelayedOperation() = runTest {
-        var result = false
-
-        launch {
-            delay(1000) // Delay for 1 second
-            result = true
-        }
-
-        advanceTimeBy(999)
-        assertFalse(result) // The operation hasn't completed yet
-
-        advanceTimeBy(1)
-        yield() // Allow the scheduled coroutine to complete
-        assertTrue(result) // Now it has completed
-    }
-
-
-//    @Test
-//    fun `test coroutine exception`() = runTest {
-//        assertFailsWith<IllegalArgumentException> {
-//            launch {
-//                // Simulate an exception being thrown in the coroutine
-//                throw IllegalArgumentException("Invalid argument")
-//            }.join() // Make sure the coroutine completes
-//        }
-//    }
 
     @Test
     fun `Users should be child`() = runTest {

@@ -1,4 +1,4 @@
-package ir.ha.meproject.presentation.features.fragments.splash
+package ir.ha.meproject.presentation.fragments.features.splash
 
 import android.util.Log
 import androidx.fragment.app.viewModels

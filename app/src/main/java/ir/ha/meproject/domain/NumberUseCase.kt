@@ -1,9 +1,9 @@
 package ir.ha.meproject.domain
 
-import ir.ha.meproject.data.repository.SampleRepositoryImpl
+import ir.ha.meproject.data.repository.NumberRepositoryImpl
 import javax.inject.Inject
 
-interface SampleUseCase {
+interface NumberUseCase {
 
     fun getRandomNumber() : Int
 
@@ -19,12 +19,12 @@ interface SampleUseCase {
 
 
 
-class SampleUseCaseImpl @Inject constructor(
-    private val sampleRepositoryImpl: SampleRepositoryImpl
-) : SampleUseCase {
+class NumberUseCaseImpl @Inject constructor(
+    private val numberRepositoryImpl: NumberRepositoryImpl
+) : NumberUseCase {
 
     override fun getRandomNumber(): Int {
-        return sampleRepositoryImpl.getRandomNumber()
+        return numberRepositoryImpl.getRandomNumber()
     }
 
     override fun isPositiveNumber(number: Int): Boolean {
@@ -40,6 +40,6 @@ class SampleUseCaseImpl @Inject constructor(
     }
 
     override fun getNumberByAnswers(): List<Array<Any>> {
-        return sampleRepositoryImpl.getNumberByAnswers()
+        return numberRepositoryImpl.getNumberByAnswers()
     }
 }

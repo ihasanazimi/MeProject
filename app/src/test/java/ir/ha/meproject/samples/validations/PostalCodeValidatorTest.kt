@@ -1,4 +1,4 @@
-package ir.ha.meproject.validations
+package ir.ha.meproject.samples.validations
 
 import ir.ha.meproject.common.extensions.isValidPostalCode
 import org.junit.Assert.*

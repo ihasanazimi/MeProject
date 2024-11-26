@@ -1,4 +1,4 @@
-package ir.ha.meproject.presentation.activities
+package ir.ha.meproject.presentation.activities.main
 
 import ir.ha.meproject.common.base.BaseViewModel
 

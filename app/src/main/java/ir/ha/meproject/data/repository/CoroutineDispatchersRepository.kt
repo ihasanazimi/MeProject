@@ -1,4 +1,4 @@
-package ir.ha.meproject.di
+package ir.ha.meproject.data.repository
 
 
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,26 +16,19 @@ interface CoroutineDispatchers {
     fun defaultDispatchersWithSupervisorJob():CoroutineContext
 }
 
-
-
-class CoroutineDispatchersImpl:CoroutineDispatchers{
+class CoroutineDispatchersImpl: CoroutineDispatchers {
     override fun ioDispatchers(): CoroutineDispatcher = Dispatchers.IO
     override fun ioDispatchersWithSupervisorJob() = Dispatchers.IO + SupervisorJob()
-
     override fun mainDispatchers() = Dispatchers.Main
-
     override fun defaultDispatchers() = Dispatchers.Default
     override fun defaultDispatchersWithSupervisorJob() = Dispatchers.Default + SupervisorJob()
 
 }
 
-
-class TestCoroutineDispatchersImpl:CoroutineDispatchers{
+class TestCoroutineDispatchersImpl: CoroutineDispatchers {
     override fun ioDispatchers(): CoroutineDispatcher = StandardTestDispatcher()
     override fun ioDispatchersWithSupervisorJob() = StandardTestDispatcher()
-
     override fun mainDispatchers() = StandardTestDispatcher()
-
     override fun defaultDispatchers() = StandardTestDispatcher()
     override fun defaultDispatchersWithSupervisorJob() = StandardTestDispatcher()
 

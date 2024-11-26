@@ -1,11 +1,11 @@
-package ir.ha.meproject.presentation.features.fragments.splash
+package ir.ha.meproject.presentation.fragments.features.splash
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.ha.meproject.common.base.BaseViewModel
 import ir.ha.meproject.data.model.ResponseState
 import ir.ha.meproject.data.model.SampleEntity
-import ir.ha.meproject.di.CoroutineDispatchers
+import ir.ha.meproject.data.repository.CoroutineDispatchers
 import ir.ha.meproject.domain.ApiCallsUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class SplashFragmentVM @Inject constructor(
 
     fun apiCall(){
         viewModelScope.launch(coroutineDispatchers.ioDispatchers()) {
-            apiCallsUseCase.apiCall1().collect{
+            apiCallsUseCase.apiCall().collect{
                 _apiCallResult.emit(it)
             }
 

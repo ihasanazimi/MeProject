@@ -4,11 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ir.ha.meproject.data.repository.SampleRepositoryImpl
+import ir.ha.meproject.data.repository.NumberRepositoryImpl
 import ir.ha.meproject.data.repository.ApiCallsRepository
 import ir.ha.meproject.data.repository.UserRepository
-import ir.ha.meproject.domain.SampleUseCase
-import ir.ha.meproject.domain.SampleUseCaseImpl
+import ir.ha.meproject.domain.NumberUseCase
+import ir.ha.meproject.domain.NumberUseCaseImpl
 import ir.ha.meproject.domain.ApiCallsUseCase
 import ir.ha.meproject.domain.ApiCallsUseCaseImpl
 import ir.ha.meproject.domain.UserUseCase
@@ -26,18 +26,16 @@ object UseCasesModule{
         return ApiCallsUseCaseImpl(apiCallsRepository)
     }
 
-
     @Singleton
     @Provides
     fun provideUserUseCase(userRepository: UserRepository): UserUseCase {
         return UserUseCaseImpl(userRepository)
     }
 
-
     @Singleton
     @Provides
-    fun provideSampleUseCase(sampleRepository: SampleRepositoryImpl): SampleUseCase {
-        return SampleUseCaseImpl(sampleRepository)
+    fun provideSampleUseCase(sampleRepository: NumberRepositoryImpl): NumberUseCase {
+        return NumberUseCaseImpl(sampleRepository)
     }
 
 }

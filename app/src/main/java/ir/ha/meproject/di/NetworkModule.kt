@@ -22,12 +22,9 @@ import javax.net.ssl.SSLSession
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-
-
     @Provides
     @Singleton
     fun provideUrl(): String = "https://mocki.io/v1/"
-
 
     @Singleton
     @Provides

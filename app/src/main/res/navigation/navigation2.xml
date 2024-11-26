@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="ir.ha.meproject.presentation.features.fragments.splash.SplashFragment"
+        android:name="ir.ha.meproject.presentation.fragments.features.splash.SplashFragment"
         android:label="splashFragment"
         tools:layout="@layout/fragment_splash"/>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="ir.ha.meproject.presentation.features.fragments.home.HomeFragment"
+        android:name="ir.ha.meproject.presentation.fragments.features.home.HomeFragment"
         android:label="homeFragment"
         tools:layout="@layout/fragment_home">
 
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/moreFragment"
-        android:name="ir.ha.meproject.presentation.features.fragments.more.MoreFragment"
+        android:name="ir.ha.meproject.presentation.fragments.features.more.MoreFragment"
         android:label="MoreFragment"
         tools:layout="@layout/fragment_more" >
 

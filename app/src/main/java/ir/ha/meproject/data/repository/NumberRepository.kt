@@ -2,7 +2,7 @@ package ir.ha.meproject.data.repository
 
 import kotlin.random.Random
 
-interface SampleRepository {
+interface NumberRepository {
 
     fun getRandomNumber() : Int
 
@@ -11,7 +11,7 @@ interface SampleRepository {
 
 
 
-class SampleRepositoryImpl : SampleRepository {
+class NumberRepositoryImpl : NumberRepository {
 
     override fun getRandomNumber(): Int {
         return Random.nextInt(0,100)

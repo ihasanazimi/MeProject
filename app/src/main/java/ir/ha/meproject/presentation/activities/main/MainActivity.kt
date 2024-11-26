@@ -1,4 +1,4 @@
-package ir.ha.meproject.presentation.activities
+package ir.ha.meproject.presentation.activities.main
 
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import ir.ha.meproject.R
