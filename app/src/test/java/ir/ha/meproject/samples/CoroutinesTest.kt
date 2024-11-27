@@ -2,11 +2,14 @@ package ir.ha.meproject.samples
 
 import ir.ha.meproject.helper.BaseTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
 import kotlin.test.assertFailsWith
@@ -44,4 +47,39 @@ class CoroutinesTest : BaseTest() {
     }
 
 
+}
+
+
+
+
+class CoroutineTest {
+
+    @Test
+    fun testSimpleCoroutine() = runTest {
+        val result = async {
+            delay(100)
+            "Hello, World!"
+        }
+        assertEquals("Hello, World!", result.await())
+    }
+
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun testWithVirtualTime() = runTest {
+        val dispatcher = StandardTestDispatcher()
+        val startTime = dispatcher.scheduler.currentTime
+        launch {
+            delay(1000)
+            assertEquals(startTime + 1000, dispatcher.scheduler.currentTime)
+        }
+        dispatcher.scheduler.advanceTimeBy(1000) /** add 1000MS to virtual time for coroutines scope delay */
+
+
+        /**
+         * @OptIn(ExperimentalCoroutinesApi::class)
+         *  use it for testing kotlin coroutines procession
+         *  because may be dispatcher.scheduler.advanceTimeBy(1000) not stabled!
+         */
+    }
 }
