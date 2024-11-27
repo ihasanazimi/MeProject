@@ -51,7 +51,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
                     is ResponseState.Error -> {
                         Log.i(TAG, "observers ResponseState.Error: ")
-                        val snackBar = Snackbar.make(binding.root, "ERROR", Snackbar.LENGTH_LONG)
+                        val snackBar = Snackbar.make(binding.root, "ERROR", Snackbar.ANIMATION_MODE_SLIDE)
                         snackBar.setAction("retry",{
                             viewModel.apiCall()
                         })
