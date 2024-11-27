@@ -68,6 +68,7 @@ android {
             excludes += "META-INF/NOTICE"
             excludes += "META-INF/NOTICE.txt"
             excludes += "META-INF/LICENSE-notice.md"
+            excludes += "MANIFEST.MF"
         }
     }
 
@@ -102,6 +103,7 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1") // hilt Testing
     androidTestImplementation("io.mockk:mockk-android:1.13.10") // mockk for androidTest
     androidTestImplementation("androidx.navigation:navigation-testing:2.8.3") // navigation-testing
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.4.0") // espresso-contrib (for recyclerView actions test)
 
     // UNIT Test Lib`s
     testImplementation(libs.junit)

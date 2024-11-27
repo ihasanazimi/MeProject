@@ -1,9 +1,6 @@
 package ir.ha.meproject.data.repository
 
 import android.util.Log
-import ir.ha.meproject.common.espresso_util.IdlingResourcesKeys
-import ir.ha.meproject.common.espresso_util.MyCountingIdlingResource
-import ir.ha.meproject.common.espresso_util.createAndReturnIdlingResource
 import ir.ha.meproject.data.model.LocalException
 import ir.ha.meproject.data.model.ResponseState
 import ir.ha.meproject.data.model.SampleEntity
@@ -17,7 +14,7 @@ import javax.inject.Inject
 interface ApiCallsRepository {
 
 
-    suspend fun apiCall1(): Flow<ResponseState<SampleEntity>>
+    suspend fun apiCall(): Flow<ResponseState<SampleEntity>>
 
 }
 
@@ -28,19 +25,10 @@ class ApiCallsRepositoryImpl @Inject constructor(
 
     private val TAG = this::class.java.simpleName
 
-    private lateinit var myIdlingResource : MyCountingIdlingResource
-
-    override suspend fun apiCall1() = flow {
+    override suspend fun apiCall() = flow {
         try {
-
-            myIdlingResource = createAndReturnIdlingResource<MyCountingIdlingResource>(
-                key = IdlingResourcesKeys.SPLASH,
-                resource = MyCountingIdlingResource(IdlingResourcesKeys.SPLASH.name)
-            ) as MyCountingIdlingResource
-
-            Log.i(TAG, "apiCall1: ")
+            Log.i(TAG, "apiCall")
             emit(ResponseState.Loading)
-            myIdlingResource.increment()
             val response = apiServices.apiCall1()
             when(response.isSuccessful){
 
@@ -55,9 +43,9 @@ class ApiCallsRepositoryImpl @Inject constructor(
                 }
             }
         } catch (e : Exception){
-            Log.i(TAG, "apiCall1: ${e.message} ")
+            Log.i(TAG, "apiCall: ${e.message} ")
             emit(ResponseState.Error(LocalException()))
-        }!!
+        } as Unit
     }.flowOn(Dispatchers.IO)
 }
 

@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import ir.ha.meproject.data.remote.ApiServices
+import ir.ha.meproject.helper.MockWebServerDispatcher
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Retrofit
@@ -26,11 +27,16 @@ object NetworkModuleTest {
 
     @Provides
     @Singleton
-    fun provideUrl(): String = "http://localhost:8080/"
+    fun provideUrl(): String = "http://127.0.0.1:8080/"
 
     @Provides
     @Singleton
     fun provideMockWebServer(): MockWebServer = MockWebServer()
+
+
+    @Singleton
+    @Provides
+    fun provideMockWebServerDispatcher() = MockWebServerDispatcher()
 
 
     @Singleton

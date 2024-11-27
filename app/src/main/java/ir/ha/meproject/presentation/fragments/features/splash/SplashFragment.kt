@@ -7,9 +7,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ir.ha.meproject.common.base.BaseFragment
-import ir.ha.meproject.common.espresso_util.IdlingResourcesKeys
-import ir.ha.meproject.common.espresso_util.MyCountingIdlingResource
-import ir.ha.meproject.common.espresso_util.getIdlingResource
 import ir.ha.meproject.common.extensions.safeNavigate
 import ir.ha.meproject.data.model.ResponseState
 import ir.ha.meproject.databinding.FragmentSplashBinding
@@ -39,9 +36,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
                         // do someThing logics..
                         binding.tv.text = "Success"
 
-                        findNavController().safeNavigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment("Hasan")).also {
-                            getIdlingResource<MyCountingIdlingResource>(IdlingResourcesKeys.SPLASH).decrement()
-                        }
+                        findNavController().safeNavigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment("Hasan"))
                     }
 
                     is ResponseState.Loading -> {
@@ -51,13 +46,12 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
                     is ResponseState.Error -> {
                         Log.i(TAG, "observers ResponseState.Error: ")
-                        val snackBar = Snackbar.make(binding.root, "ERROR", Snackbar.ANIMATION_MODE_SLIDE)
+                        val snackBar = Snackbar.make(binding.root, "ERROR", Snackbar.LENGTH_INDEFINITE)
                         snackBar.setAction("retry") {
                             viewModel.apiCall()
                         }
                         snackBar.show()
                         binding.tv.text = "Error"
-                        getIdlingResource<MyCountingIdlingResource>(IdlingResourcesKeys.SPLASH).decrement()
                     }
 
                 }

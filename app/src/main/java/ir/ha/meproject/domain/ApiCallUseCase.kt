@@ -20,7 +20,7 @@ class ApiCallsUseCaseImpl @Inject constructor(
     private val TAG = this::class.java.simpleName
 
     override suspend fun apiCall(): Flow<ResponseState<SampleEntity>> {
-        return apiCallsRepository.apiCall1().also {
+        return apiCallsRepository.apiCall().also {
             Log.i(TAG, "apiCall: ")
         }
     }

@@ -1,31 +1,14 @@
 package ir.ha.meproject.common.espresso_util
 
-import android.util.Log
 import androidx.test.espresso.IdlingResource
-import java.util.concurrent.atomic.AtomicInteger
 
-
-
-enum class IdlingResourcesKeys{
-    SPLASH , HOME , MORE
-}
-
-private val IdlingResourcesHash = hashMapOf<IdlingResourcesKeys, Any>()
-fun <T>getIdlingResource(key : IdlingResourcesKeys) = IdlingResourcesHash[key] as T
-fun <T>createAndReturnIdlingResource(key : IdlingResourcesKeys, resource : IdlingResource) : T? {
-    IdlingResourcesHash[key] = resource
-    return getIdlingResource(key) as T
-}
-
-
-
-class MyIdlingResource(val tag: String) : IdlingResource {
+class ManualCheckingIdlingResource(private val waitForComeThisScreenTag: String) : IdlingResource {
 
     @Volatile
     private var callback: IdlingResource.ResourceCallback? = null
     private var isIdle = true
 
-    override fun getName(): String = tag + "idleResource"
+    override fun getName(): String = waitForComeThisScreenTag
 
     override fun isIdleNow(): Boolean = isIdle
 
@@ -43,8 +26,29 @@ class MyIdlingResource(val tag: String) : IdlingResource {
 
 
 
+class AutomaticCheckingIdlingResource(private val waitForComeThisScreenTag: String) : IdlingResource {
+
+    @Volatile
+    private var callback: IdlingResource.ResourceCallback? = null
+    private var isIdle = true
+
+    override fun getName(): String = waitForComeThisScreenTag
+
+    override fun isIdleNow(): Boolean {
+        if (isIdle) callback?.onTransitionToIdle()
+        return isIdle
+    }
+
+    override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback?) {
+        this.callback = callback
+    }
+}
 
 
+
+
+
+/*
 class MyCountingIdlingResource(resourceName: String) : IdlingResource {
 
     private val TAG = this::class.java.simpleName
@@ -77,3 +81,4 @@ class MyCountingIdlingResource(resourceName: String) : IdlingResource {
     }
 }
 
+*/

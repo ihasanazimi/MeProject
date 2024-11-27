@@ -16,7 +16,7 @@ class MockWebServerDispatcher {
                 "/5be5839a-d088-483f-9270-33df02550b0c" ->
                     MockResponse().setResponseCode(200)
                         .setBody(FileReader.readStringFromFile("result.json"))
-                else -> MockResponse().setResponseCode(400)
+                else -> MockResponse().setResponseCode(520)
             }
         }
     }
