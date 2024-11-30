@@ -36,6 +36,7 @@ stetho = "1.5.1"
 viewmodel = "1.1.1"
 kspVersion = "1.9.22-1.0.17"
 coreAnimation = "1.0.0"
+junitKtx = "1.2.1"
 
 
 [plugins]
@@ -103,4 +104,5 @@ stetho-js-rhino = { module = "com.facebook.stetho:stetho-js-rhino", version.ref 
 stetho-okhttp3 = { module = "com.facebook.stetho:stetho-okhttp3", version.ref = "stetho" }
 viewmodel = { module = "android.arch.lifecycle:viewmodel", version.ref = "viewmodel" }
 androidx-core-animation = { group = "androidx.core", name = "core-animation", version.ref = "coreAnimation" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 

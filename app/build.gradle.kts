@@ -88,6 +88,7 @@ dependencies {
     // test Utils
     implementation("androidx.test.espresso.idling:idling-concurrent:3.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3") // KotlinCoroutineTesting
+    implementation(libs.androidx.junit.ktx)
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     androidTestUtil("androidx.test:orchestrator:1.4.1")

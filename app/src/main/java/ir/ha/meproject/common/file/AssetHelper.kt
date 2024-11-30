@@ -59,7 +59,6 @@ object AssetHelper {
         println("parseJson")
         val inputStream = classLoader?.getResourceAsStream(fileName)
         val reader = BufferedReader(InputStreamReader(inputStream, StandardCharsets.UTF_8))
-//    println("reader ${readTextFile(inputStream!!)}")
         val gson = Gson()
         val dataClass = gson.fromJson(reader.readText(),T::class.java)
         println("final dataClass: $dataClass")
