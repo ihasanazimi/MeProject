@@ -4,10 +4,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import ir.hasanazimi.me.R
-import ir.hasanazimi.me.databinding.ActivityMainBinding
-import ir.hasanazimi.me.presentation.features.fragments.temp1.Temp1Fragment
 import ir.hasanazimi.me.common.base.BaseActivity
-import ir.hasanazimi.me.common.extensions.addFragmentByAnimation
+import ir.hasanazimi.me.common.extensions.showToast
+import ir.hasanazimi.me.common.extensions.withNotNull
+import ir.hasanazimi.me.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
